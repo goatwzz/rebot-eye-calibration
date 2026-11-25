@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "type": "effective_joint_angle_offsets",
+  "convention": "q_model_rad = q_measured_rad + joint_offsets_rad",
+  "joint_names": [
+    "joint1",
+    "joint2",
+    "joint3",
+    "joint4",
+    "joint5",
+    "joint6"
+  ],
+  "joint_offsets_rad": [
+    0.0,
+    0.030985990436840326,
+    0.022788684700092158,
+    -0.047901576216383135,
+    -0.01567252928042461,
+    0.0
+  ],
+  "joint_offsets_deg": [
+    0.0,
+    1.7753664760636807,
+    1.3056954539696328,
+    -2.7445581492229962,
+    -0.8979697820635353,
+    0.0
+  ],
+  "gauge_fixed_joints": [
+    "joint1",
+    "joint6"
+  ],
+  "original_urdf": "repo://vendor/sdks/modern/urdf/RS/urdf/ReBot_Arm_RS.urdf",
+  "original_urdf_sha256": "f0f6ce7594eff46373630ca509672ca96e6919ba903174861fe7801e8a7b411c",
+  "base_frame": "base_link",
+  "ee_frame": "gripper_end",
+  "training_dataset_id": "902ce440-bacd-477f-b8fa-c2cb4820040b",
+  "rigid_target_assumed": true,
+  "physical_accuracy_verified": false,
+  "scope": "Effective FK angle correction only; link lengths, axes and compliance not identified. No motor zero or dynamics changes."
+}

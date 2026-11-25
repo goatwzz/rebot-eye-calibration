@@ -1,0 +1,702 @@
+{
+  "schema_version": 1,
+  "convention": "T_A_B maps coordinates from B to A; translation in meters",
+  "T_base_camera": [
+    [
+      -0.0008057027910537799,
+      0.9611714551565973,
+      -0.2759506923984101,
+      0.5179672575262848
+    ],
+    [
+      0.9998005969010715,
+      0.006280278255710165,
+      0.018955857703943146,
+      -0.04517836216973945
+    ],
+    [
+      0.019952876466158342,
+      -0.27588039418773547,
+      -0.9609848546275566,
+      0.583438084036225
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_camera_base": [
+    [
+      -0.0008057027910537799,
+      0.9998005969010715,
+      0.019952876466158342,
+      0.033945413112954785
+    ],
+    [
+      0.9611714551565973,
+      0.006280278255710165,
+      -0.27588039418773547,
+      -0.33661248134639704
+    ],
+    [
+      -0.2759506923984101,
+      0.018955857703943146,
+      -0.9609848546275566,
+      0.7044649803304025
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_ee_target": [
+    [
+      -0.005623083392831962,
+      -0.9999841734195157,
+      -0.0001839664243068499,
+      -0.040344472914610054
+    ],
+    [
+      0.9999599066640631,
+      -0.005624228836208778,
+      0.006968006486524252,
+      0.0018815115533386347
+    ],
+    [
+      -0.006968930876077258,
+      -0.00014477736692367852,
+      0.9999757062258856,
+      0.023424621017675923
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "kinematic_correction": {
+    "schema_version": 1,
+    "type": "effective_joint_angle_offsets",
+    "convention": "q_model_rad = q_measured_rad + joint_offsets_rad",
+    "joint_names": [
+      "joint1",
+      "joint2",
+      "joint3",
+      "joint4",
+      "joint5",
+      "joint6"
+    ],
+    "joint_offsets_rad": [
+      0.0,
+      0.030985990436840326,
+      0.022788684700092158,
+      -0.047901576216383135,
+      -0.01567252928042461,
+      0.0
+    ],
+    "joint_offsets_deg": [
+      0.0,
+      1.7753664760636807,
+      1.3056954539696328,
+      -2.7445581492229962,
+      -0.8979697820635353,
+      0.0
+    ],
+    "gauge_fixed_joints": [
+      "joint1",
+      "joint6"
+    ],
+    "original_urdf": "repo://vendor/sdks/modern/urdf/RS/urdf/ReBot_Arm_RS.urdf",
+    "original_urdf_sha256": "f0f6ce7594eff46373630ca509672ca96e6919ba903174861fe7801e8a7b411c",
+    "base_frame": "base_link",
+    "ee_frame": "gripper_end",
+    "training_dataset_id": "902ce440-bacd-477f-b8fa-c2cb4820040b",
+    "rigid_target_assumed": true,
+    "physical_accuracy_verified": false,
+    "scope": "Effective FK angle correction only; link lengths, axes and compliance not identified. No motor zero or dynamics changes."
+  },
+  "initial_method": "nominal_reprojection_then_joint_offset_identification",
+  "optimization": {
+    "enabled": true,
+    "success": true,
+    "objective": "image_corners_with_joint_offsets_2_5",
+    "loss": "soft_l1",
+    "f_scale_px": 1.0,
+    "cost": 484.9574657962299,
+    "nfev": 12,
+    "normalized_jacobian_rank": 16,
+    "normalized_jacobian_condition": 112.11405704281466,
+    "samples_removed": 0
+  },
+  "training": {
+    "count": 61,
+    "summary": {
+      "translation_mm": {
+        "rms": 2.013466948853723,
+        "median": 1.8348850988844607,
+        "p95": 3.2615019648703196,
+        "max": 3.959890551155504
+      },
+      "rotation_deg": {
+        "rms": 1.2829979051266762,
+        "median": 0.8316620165600815,
+        "p95": 2.5042690952293127,
+        "max": 3.3353420572914483
+      },
+      "predicted_reprojection_rms_px": {
+        "rms": 3.1816857157986926,
+        "median": 2.2490453505235983,
+        "p95": 6.623420711417266,
+        "max": 7.948389098262481
+      }
+    },
+    "samples": [
+      {
+        "id": "d7a1c872-5a92-438e-bc8f-02a8160328e3",
+        "translation_mm": 0.6845188346424211,
+        "rotation_deg": 1.9883695481059784,
+        "predicted_reprojection_rms_px": 2.108819823800103
+      },
+      {
+        "id": "fd0c9dba-3002-4a69-8f2f-b33b80473aea",
+        "translation_mm": 0.5646509087944594,
+        "rotation_deg": 1.4784990233626718,
+        "predicted_reprojection_rms_px": 1.2467517040266893
+      },
+      {
+        "id": "aa017584-5e9b-4d37-8c5a-f54d5b0f60fc",
+        "translation_mm": 0.8121591122656923,
+        "rotation_deg": 0.8435553761970258,
+        "predicted_reprojection_rms_px": 2.6262558239881146
+      },
+      {
+        "id": "729ab8c3-fe0f-4405-9f01-8d33193d00e2",
+        "translation_mm": 0.7153775195035651,
+        "rotation_deg": 2.068292290541166,
+        "predicted_reprojection_rms_px": 1.8508551023885496
+      },
+      {
+        "id": "2407ab7d-cd9a-4f05-9b56-3e38f7149cb6",
+        "translation_mm": 2.393380109159061,
+        "rotation_deg": 1.4421015785275475,
+        "predicted_reprojection_rms_px": 3.746714803341162
+      },
+      {
+        "id": "ec4f12f0-6f59-49bd-9601-572f618e02e1",
+        "translation_mm": 0.8144996579360186,
+        "rotation_deg": 2.8214903172982297,
+        "predicted_reprojection_rms_px": 2.1012277360710017
+      },
+      {
+        "id": "3b61e56e-f873-4837-b2e4-234a763d108a",
+        "translation_mm": 2.18843513406711,
+        "rotation_deg": 1.208876635263167,
+        "predicted_reprojection_rms_px": 3.7933180577764753
+      },
+      {
+        "id": "d963fe02-6550-45c4-97fd-1bc8c5d4e769",
+        "translation_mm": 2.4993399953635542,
+        "rotation_deg": 0.33690681343318163,
+        "predicted_reprojection_rms_px": 3.5499859797157227
+      },
+      {
+        "id": "d4311684-4b04-41ac-be24-c4e9b9af6105",
+        "translation_mm": 2.7607857101136988,
+        "rotation_deg": 0.18470252353323313,
+        "predicted_reprojection_rms_px": 2.322777185492611
+      },
+      {
+        "id": "8953c3f2-6c2f-43d9-9396-4c00302a4935",
+        "translation_mm": 0.8290700898163613,
+        "rotation_deg": 3.3353420572914483,
+        "predicted_reprojection_rms_px": 2.2909671118351183
+      },
+      {
+        "id": "b680e6bf-b03c-46ea-b288-c14ff19b599d",
+        "translation_mm": 1.1665980583074682,
+        "rotation_deg": 0.8878257394004759,
+        "predicted_reprojection_rms_px": 3.8518905129707086
+      },
+      {
+        "id": "da4cd73a-c50f-4f82-959e-e7f9c78c611b",
+        "translation_mm": 1.1918379452283954,
+        "rotation_deg": 0.8158885188451622,
+        "predicted_reprojection_rms_px": 3.9964158792265536
+      },
+      {
+        "id": "3e93825a-0116-4d80-bf45-f325f66f68b8",
+        "translation_mm": 0.38872175486076604,
+        "rotation_deg": 0.2798885855906283,
+        "predicted_reprojection_rms_px": 0.9568074268668884
+      },
+      {
+        "id": "14966967-aa62-4241-a3e6-2838bd7ada60",
+        "translation_mm": 2.131212099354767,
+        "rotation_deg": 1.559196209552104,
+        "predicted_reprojection_rms_px": 2.174584114834929
+      },
+      {
+        "id": "92f60280-e44c-40b1-8929-6110b596aee7",
+        "translation_mm": 2.4037840307614546,
+        "rotation_deg": 0.518468839698691,
+        "predicted_reprojection_rms_px": 4.1316996926421465
+      },
+      {
+        "id": "007a6a27-ecab-4deb-b17f-d4151c74f7dd",
+        "translation_mm": 0.8246416073524695,
+        "rotation_deg": 1.353289393085562,
+        "predicted_reprojection_rms_px": 2.4432693487244417
+      },
+      {
+        "id": "d4016840-7f80-48d9-9c9b-e9dd3d0c9f45",
+        "translation_mm": 3.2615019648703196,
+        "rotation_deg": 0.42479616338670306,
+        "predicted_reprojection_rms_px": 0.8928358130400738
+      },
+      {
+        "id": "22789d2a-7e11-4418-aadf-8c1ea00e011a",
+        "translation_mm": 0.661370706462408,
+        "rotation_deg": 0.20882452630262371,
+        "predicted_reprojection_rms_px": 0.444026237490505
+      },
+      {
+        "id": "5d339c76-f0c3-4a64-8e1b-eea7518aeb90",
+        "translation_mm": 2.7722200076460877,
+        "rotation_deg": 0.7508921362690918,
+        "predicted_reprojection_rms_px": 2.933509109352478
+      },
+      {
+        "id": "ad37c41d-5864-476d-b610-b8b0e0d6b48f",
+        "translation_mm": 0.6555360132231005,
+        "rotation_deg": 0.5306132415605661,
+        "predicted_reprojection_rms_px": 2.195160767165853
+      },
+      {
+        "id": "9e7ed6be-83b6-4bf6-b571-e539afee64b3",
+        "translation_mm": 2.11708430298879,
+        "rotation_deg": 0.6473505108644508,
+        "predicted_reprojection_rms_px": 1.1384818665912768
+      },
+      {
+        "id": "02c4ab3f-2dee-4d33-9b5f-724c8245f409",
+        "translation_mm": 2.4800225434041203,
+        "rotation_deg": 0.6050115364469157,
+        "predicted_reprojection_rms_px": 4.495918408993656
+      },
+      {
+        "id": "25a88369-e871-461d-a254-10b3828e140c",
+        "translation_mm": 3.1171662351309957,
+        "rotation_deg": 0.8325737183478761,
+        "predicted_reprojection_rms_px": 2.4428867577848328
+      },
+      {
+        "id": "e3aa0f89-d3fc-4157-be4b-10809caafc9a",
+        "translation_mm": 2.1084862747951996,
+        "rotation_deg": 0.5750763177516525,
+        "predicted_reprojection_rms_px": 1.7703983073150824
+      },
+      {
+        "id": "7e3fb9b6-baaa-44a9-bbb5-09311113b827",
+        "translation_mm": 2.309551623526396,
+        "rotation_deg": 0.8287478947509755,
+        "predicted_reprojection_rms_px": 1.228313932115374
+      },
+      {
+        "id": "0241ad8a-db83-4d53-944e-c78f3db78194",
+        "translation_mm": 3.3474176351714666,
+        "rotation_deg": 0.5412695796117264,
+        "predicted_reprojection_rms_px": 2.4182552191554545
+      },
+      {
+        "id": "12bb7037-c5ae-4150-aa38-58626846736f",
+        "translation_mm": 0.9651726582363377,
+        "rotation_deg": 0.11555875271890372,
+        "predicted_reprojection_rms_px": 0.798659400907683
+      },
+      {
+        "id": "b85295b1-6147-48f2-ac8c-dd0a819e9e68",
+        "translation_mm": 1.8348850988844607,
+        "rotation_deg": 0.7607280312683343,
+        "predicted_reprojection_rms_px": 2.226779216776363
+      },
+      {
+        "id": "17162289-dcce-421b-bb38-844d72b2b03d",
+        "translation_mm": 3.575299348336329,
+        "rotation_deg": 0.5831820499993926,
+        "predicted_reprojection_rms_px": 2.380583824085238
+      },
+      {
+        "id": "5abb9fe5-0988-4a80-a201-21354cf2c625",
+        "translation_mm": 0.19735519294850495,
+        "rotation_deg": 0.41155077501092924,
+        "predicted_reprojection_rms_px": 0.6051817987071296
+      },
+      {
+        "id": "c481d1b6-bb83-45de-a01d-1196009d7ef9",
+        "translation_mm": 2.6458804785862307,
+        "rotation_deg": 0.34797467455028347,
+        "predicted_reprojection_rms_px": 0.8214351358065
+      },
+      {
+        "id": "f993ba45-2325-4f82-b704-b00384a7d297",
+        "translation_mm": 0.7923836723669236,
+        "rotation_deg": 0.39378983408949003,
+        "predicted_reprojection_rms_px": 0.8090989611994742
+      },
+      {
+        "id": "ed95bc59-35ac-4052-b152-a2324bb89234",
+        "translation_mm": 1.3443931221339527,
+        "rotation_deg": 1.1538099040874474,
+        "predicted_reprojection_rms_px": 1.3932369567848981
+      },
+      {
+        "id": "754049e8-9d09-4525-b83a-fb1fa4cb5fa5",
+        "translation_mm": 0.7499498090660701,
+        "rotation_deg": 1.331058667251661,
+        "predicted_reprojection_rms_px": 2.242012793658272
+      },
+      {
+        "id": "94602928-f06a-44f2-98c4-5d406657055e",
+        "translation_mm": 0.32246908110498135,
+        "rotation_deg": 0.2730663071423174,
+        "predicted_reprojection_rms_px": 1.0704467599872063
+      },
+      {
+        "id": "660c7059-94af-4784-81c7-a384fdc08d11",
+        "translation_mm": 2.405448530137363,
+        "rotation_deg": 1.0763810667772782,
+        "predicted_reprojection_rms_px": 1.8193844470194107
+      },
+      {
+        "id": "438b40b1-647d-42a3-bd12-e95722a40e3d",
+        "translation_mm": 1.9357230011960065,
+        "rotation_deg": 0.34867239196590727,
+        "predicted_reprojection_rms_px": 0.9746251104026303
+      },
+      {
+        "id": "2cc75031-7ee9-4b24-a3b0-5168c3de0313",
+        "translation_mm": 1.1974322703435063,
+        "rotation_deg": 0.20557316715560192,
+        "predicted_reprojection_rms_px": 2.6125024911198262
+      },
+      {
+        "id": "f9365fa1-9dfa-44ad-872a-70076381ed62",
+        "translation_mm": 0.31745538277070984,
+        "rotation_deg": 0.2793350089752943,
+        "predicted_reprojection_rms_px": 1.0577075528599136
+      },
+      {
+        "id": "0d680164-57a1-452b-be5a-cd947341efe3",
+        "translation_mm": 1.555597903451122,
+        "rotation_deg": 0.6726693559097868,
+        "predicted_reprojection_rms_px": 1.8638122523156897
+      },
+      {
+        "id": "5b46bd8c-b394-461a-a706-90fd4019eb81",
+        "translation_mm": 0.6144768953060907,
+        "rotation_deg": 0.24681779277790952,
+        "predicted_reprojection_rms_px": 1.1481156337048934
+      },
+      {
+        "id": "9fef8291-5653-4930-b68b-71c3fde3dc51",
+        "translation_mm": 2.9025515837517624,
+        "rotation_deg": 0.6926885990501465,
+        "predicted_reprojection_rms_px": 2.491330923845449
+      },
+      {
+        "id": "1104dbc5-12dd-4d4c-830b-10b522368702",
+        "translation_mm": 0.8634676102693895,
+        "rotation_deg": 1.470798180752609,
+        "predicted_reprojection_rms_px": 2.8868112296337305
+      },
+      {
+        "id": "4baf6f7d-11a7-4b8c-98e8-e3912ca8b7d2",
+        "translation_mm": 1.641888793543471,
+        "rotation_deg": 0.38538897545264095,
+        "predicted_reprojection_rms_px": 2.2129201661639746
+      },
+      {
+        "id": "6058391b-6373-496a-998c-ac7d6136ad8c",
+        "translation_mm": 1.3398466395268431,
+        "rotation_deg": 0.21039246696711345,
+        "predicted_reprojection_rms_px": 3.898524672785972
+      },
+      {
+        "id": "4e688527-22a6-48f9-8bc3-1b6d36209830",
+        "translation_mm": 1.2968321306116453,
+        "rotation_deg": 0.9236946225508629,
+        "predicted_reprojection_rms_px": 2.23901001022421
+      },
+      {
+        "id": "01d8264f-268b-4089-985e-d464a17e21db",
+        "translation_mm": 2.575743315413746,
+        "rotation_deg": 1.1477943511234723,
+        "predicted_reprojection_rms_px": 3.4339409502101916
+      },
+      {
+        "id": "f2ff135a-6d1a-4e75-839b-7e38e6e82698",
+        "translation_mm": 2.9093711446373307,
+        "rotation_deg": 1.8095809823269977,
+        "predicted_reprojection_rms_px": 7.246672582047351
+      },
+      {
+        "id": "9f3f4e97-95f3-4535-b1ea-f9c60d13c751",
+        "translation_mm": 2.79615160324732,
+        "rotation_deg": 2.5042690952293127,
+        "predicted_reprojection_rms_px": 3.4047958544390986
+      },
+      {
+        "id": "162866b7-0767-433b-b4a1-57d969b12760",
+        "translation_mm": 2.1755298622349,
+        "rotation_deg": 1.1757304125238357,
+        "predicted_reprojection_rms_px": 3.8401607706702934
+      },
+      {
+        "id": "843678a6-e793-4ebf-a0f6-debea61d47ef",
+        "translation_mm": 3.0729853473869104,
+        "rotation_deg": 2.1732047449376197,
+        "predicted_reprojection_rms_px": 7.576696608806172
+      },
+      {
+        "id": "c03eb21c-b632-4814-977c-edd1b1219ad1",
+        "translation_mm": 2.5105910387912873,
+        "rotation_deg": 2.2272228346356493,
+        "predicted_reprojection_rms_px": 1.3246011595908052
+      },
+      {
+        "id": "2016c2cf-3f5d-432c-bca1-d7748d4c1b1b",
+        "translation_mm": 2.4127258877860083,
+        "rotation_deg": 2.650268553373135,
+        "predicted_reprojection_rms_px": 3.350782535089907
+      },
+      {
+        "id": "aa82e577-7b10-488c-bc9b-85952b85a9d0",
+        "translation_mm": 1.7797987223348855,
+        "rotation_deg": 1.0272648186560749,
+        "predicted_reprojection_rms_px": 5.002119463547317
+      },
+      {
+        "id": "847244ee-5516-4afd-b6fe-5e2950fb411d",
+        "translation_mm": 2.703083845320272,
+        "rotation_deg": 1.7003734402582484,
+        "predicted_reprojection_rms_px": 6.623420711417266
+      },
+      {
+        "id": "e0d46c2e-8d8d-4fc0-bf25-2e4e4e5c90f4",
+        "translation_mm": 1.276851890982749,
+        "rotation_deg": 0.6906108055999537,
+        "predicted_reprojection_rms_px": 0.899220167027612
+      },
+      {
+        "id": "b57abdb3-abf8-42f9-bb65-bb587e3d3528",
+        "translation_mm": 0.7636204321069338,
+        "rotation_deg": 1.496808715200586,
+        "predicted_reprojection_rms_px": 2.2490453505235983
+      },
+      {
+        "id": "632009b5-44f3-48bd-a883-8f256dc6345e",
+        "translation_mm": 2.1019700986027847,
+        "rotation_deg": 1.092526706540034,
+        "predicted_reprojection_rms_px": 6.213096421235821
+      },
+      {
+        "id": "3362651e-3130-46b8-b295-412474db2345",
+        "translation_mm": 3.959890551155504,
+        "rotation_deg": 1.9919091454189295,
+        "predicted_reprojection_rms_px": 7.948389098262481
+      },
+      {
+        "id": "fac83636-388b-4e13-8025-176ba14b90c6",
+        "translation_mm": 2.155257771575998,
+        "rotation_deg": 0.8316620165600815,
+        "predicted_reprojection_rms_px": 2.2052033098686032
+      },
+      {
+        "id": "21910e58-8741-4800-bc7e-154bb1b4c4ee",
+        "translation_mm": 1.436614030734275,
+        "rotation_deg": 2.226721923194747,
+        "predicted_reprojection_rms_px": 3.614629480892662
+      }
+    ]
+  },
+  "training_ids": [
+    "d7a1c872-5a92-438e-bc8f-02a8160328e3",
+    "fd0c9dba-3002-4a69-8f2f-b33b80473aea",
+    "aa017584-5e9b-4d37-8c5a-f54d5b0f60fc",
+    "729ab8c3-fe0f-4405-9f01-8d33193d00e2",
+    "2407ab7d-cd9a-4f05-9b56-3e38f7149cb6",
+    "ec4f12f0-6f59-49bd-9601-572f618e02e1",
+    "3b61e56e-f873-4837-b2e4-234a763d108a",
+    "d963fe02-6550-45c4-97fd-1bc8c5d4e769",
+    "d4311684-4b04-41ac-be24-c4e9b9af6105",
+    "8953c3f2-6c2f-43d9-9396-4c00302a4935",
+    "b680e6bf-b03c-46ea-b288-c14ff19b599d",
+    "da4cd73a-c50f-4f82-959e-e7f9c78c611b",
+    "3e93825a-0116-4d80-bf45-f325f66f68b8",
+    "14966967-aa62-4241-a3e6-2838bd7ada60",
+    "92f60280-e44c-40b1-8929-6110b596aee7",
+    "007a6a27-ecab-4deb-b17f-d4151c74f7dd",
+    "d4016840-7f80-48d9-9c9b-e9dd3d0c9f45",
+    "22789d2a-7e11-4418-aadf-8c1ea00e011a",
+    "5d339c76-f0c3-4a64-8e1b-eea7518aeb90",
+    "ad37c41d-5864-476d-b610-b8b0e0d6b48f",
+    "9e7ed6be-83b6-4bf6-b571-e539afee64b3",
+    "02c4ab3f-2dee-4d33-9b5f-724c8245f409",
+    "25a88369-e871-461d-a254-10b3828e140c",
+    "e3aa0f89-d3fc-4157-be4b-10809caafc9a",
+    "7e3fb9b6-baaa-44a9-bbb5-09311113b827",
+    "0241ad8a-db83-4d53-944e-c78f3db78194",
+    "12bb7037-c5ae-4150-aa38-58626846736f",
+    "b85295b1-6147-48f2-ac8c-dd0a819e9e68",
+    "17162289-dcce-421b-bb38-844d72b2b03d",
+    "5abb9fe5-0988-4a80-a201-21354cf2c625",
+    "c481d1b6-bb83-45de-a01d-1196009d7ef9",
+    "f993ba45-2325-4f82-b704-b00384a7d297",
+    "ed95bc59-35ac-4052-b152-a2324bb89234",
+    "754049e8-9d09-4525-b83a-fb1fa4cb5fa5",
+    "94602928-f06a-44f2-98c4-5d406657055e",
+    "660c7059-94af-4784-81c7-a384fdc08d11",
+    "438b40b1-647d-42a3-bd12-e95722a40e3d",
+    "2cc75031-7ee9-4b24-a3b0-5168c3de0313",
+    "f9365fa1-9dfa-44ad-872a-70076381ed62",
+    "0d680164-57a1-452b-be5a-cd947341efe3",
+    "5b46bd8c-b394-461a-a706-90fd4019eb81",
+    "9fef8291-5653-4930-b68b-71c3fde3dc51",
+    "1104dbc5-12dd-4d4c-830b-10b522368702",
+    "4baf6f7d-11a7-4b8c-98e8-e3912ca8b7d2",
+    "6058391b-6373-496a-998c-ac7d6136ad8c",
+    "4e688527-22a6-48f9-8bc3-1b6d36209830",
+    "01d8264f-268b-4089-985e-d464a17e21db",
+    "f2ff135a-6d1a-4e75-839b-7e38e6e82698",
+    "9f3f4e97-95f3-4535-b1ea-f9c60d13c751",
+    "162866b7-0767-433b-b4a1-57d969b12760",
+    "843678a6-e793-4ebf-a0f6-debea61d47ef",
+    "c03eb21c-b632-4814-977c-edd1b1219ad1",
+    "2016c2cf-3f5d-432c-bca1-d7748d4c1b1b",
+    "aa82e577-7b10-488c-bc9b-85952b85a9d0",
+    "847244ee-5516-4afd-b6fe-5e2950fb411d",
+    "e0d46c2e-8d8d-4fc0-bf25-2e4e4e5c90f4",
+    "b57abdb3-abf8-42f9-bb65-bb587e3d3528",
+    "632009b5-44f3-48bd-a883-8f256dc6345e",
+    "3362651e-3130-46b8-b295-412474db2345",
+    "fac83636-388b-4e13-8025-176ba14b90c6",
+    "21910e58-8741-4800-bc7e-154bb1b4c4ee"
+  ],
+  "training_dataset_id": "902ce440-bacd-477f-b8fa-c2cb4820040b",
+  "provenance": {
+    "target": {
+      "type": "aruco",
+      "dictionary": "DICT_4X4_50",
+      "id": 0,
+      "marker_m": 0.06
+    },
+    "image_size": [
+      1280,
+      720
+    ],
+    "camera": {
+      "kind": "realsense",
+      "serial": "250122070127",
+      "name": "RealSense D435",
+      "distortion_model": "distortion.inverse_brown_conrady",
+      "sdk_distortion_coeffs": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "opencv_distortion_interpretation": "pinhole_exact_zero_brown_coefficients",
+      "fps": 30,
+      "stream": "color_only",
+      "image_size": [
+        1280,
+        720
+      ]
+    },
+    "robot": {
+      "source": "SDK-native-MIT-snapshot-stationary",
+      "urdf": "repo://vendor/sdks/modern/urdf/RS/urdf/ReBot_Arm_RS.urdf",
+      "urdf_sha256": "f0f6ce7594eff46373630ca509672ca96e6919ba903174861fe7801e8a7b411c",
+      "base_frame": "base_link",
+      "ee_frame": "gripper_end",
+      "joint_names": [
+        "joint1",
+        "joint2",
+        "joint3",
+        "joint4",
+        "joint5",
+        "joint6"
+      ],
+      "channel": "can0",
+      "kinematic_model": "nominal_raw_angles_no_offsets",
+      "gravity_parameters": {
+        "kp": 8.0,
+        "kd": 1.0,
+        "linear_release_threshold": 0.04,
+        "angular_release_threshold": 0.08,
+        "tau_scale": [
+          1.0,
+          0.96,
+          0.95,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "payload_mass_kg": 0.016,
+        "payload_frame": "gripper_end",
+        "payload_com_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "wrist_camera_mass_kg": 0.0,
+        "wrist_camera_frame": "link6",
+        "wrist_camera_com_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "config_path": "local-history/rebot_eye_calibration/rebot_eye_to_hand/gravity_collection.json",
+        "config_sha256": "cb292a10b641fcc7eb79cd68aca48c5b52d931e1a62876b339b24f5070e10d96",
+        "scope": "Configured point masses with official SDK gravity feedforward; nominal RAW-angle model"
+      },
+      "source_urdf": "repo://vendor/sdks/modern/urdf/RS/urdf/ReBot_Arm_RS.urdf"
+    },
+    "K": [
+      [
+        911.4237060546875,
+        0.0,
+        656.587890625
+      ],
+      [
+        0.0,
+        909.2822265625,
+        380.4680480957031
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "D": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "synthetic": false
+  },
+  "warnings": [
+    "Use this result with its paired kinematic correction. This is not full URDF geometric calibration or a motor-zero calibration."
+  ],
+  "acceptance": "UNVALIDATED: new validation and independent physical accuracy check required",
+  "training_dataset_sha256": "d71c23444f61eb924ac6e89d385b7d97c3b086fe04f97eac44c63419f0ee62d9"
+}

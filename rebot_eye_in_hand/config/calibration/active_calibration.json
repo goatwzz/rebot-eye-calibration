@@ -1,0 +1,95 @@
+{
+  "schema_version": 2,
+  "mode": "eye_in_hand",
+  "active_result": "config/calibration/hand_eye.npz",
+  "sha256": "5e6d436d91276c630aecf83a6eff7cb04c81f9577c0fd8ad8b322a122146daf7",
+  "camera_serial": "332322072170",
+  "urdf_sha256": "3838ca8f9d586be22a89b33c7cbdd4abd43d4a92a2de377b294eef4c5bd7654d",
+  "training_count": 74,
+  "training_dataset_ids": [
+    "20e36fba-0fae-4acd-a463-87e6ea500fdd"
+  ],
+  "training_dataset_sha256": [
+    "1a8673bd8a0ae56afa6a41b5c1c0c503735665202dbccb98412f4d235f511b6b"
+  ],
+  "T_gripper_camera": [
+    [
+      -0.0019776215280432885,
+      -0.5141509480777108,
+      0.8576974359317413,
+      -0.11113135137305248
+    ],
+    [
+      -0.9999816328947965,
+      -0.0038970947204868545,
+      -0.004641823542147594,
+      0.033698005334740426
+    ],
+    [
+      0.0057291261243493374,
+      -0.8576908622828688,
+      -0.5141337976347409,
+      0.09559299325585274
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "translation_units": "meters",
+  "joint_offsets_rad": [
+    0.0,
+    0.04280555679711782,
+    -0.0019013251668914886,
+    -0.030564555499854592,
+    -0.009281164387059075,
+    0.0
+  ],
+  "joint_offsets_deg": [
+    0.0,
+    2.452577744182385,
+    -0.10893790754488918,
+    -1.7512200328350365,
+    -0.5317715483456086,
+    0.0
+  ],
+  "model_convention": "q_model=q_raw+joint_offsets_rad; motor commands remain raw; raw home remains zero",
+  "joint_correction": "config/calibration/joint_correction.json",
+  "camera_mass_kg": 0.11,
+  "aruco": {
+    "dictionary": "DICT_4X4_50",
+    "id": 0,
+    "marker_m": 0.06
+  },
+  "corner_clearance_m": 0.003,
+  "runtime_base_compensation_m": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "physical_accuracy_verified": false,
+  "training_consistency": {
+    "translation_mm": {
+      "rms": 2.5921996281114543,
+      "median": 1.9459740988178393,
+      "p95": 4.233736297424015,
+      "max": 6.223944595761669
+    },
+    "rotation_deg": {
+      "rms": 1.1568725839143763,
+      "median": 0.8008045862632844,
+      "p95": 1.9292234966583837,
+      "max": 3.377088519220504
+    },
+    "predicted_reprojection_rms_px": {
+      "rms": 2.229923155528419,
+      "median": 1.9457388649681826,
+      "p95": 3.68949503625996,
+      "max": 3.973627255452594
+    }
+  },
+  "selection": "Published installation-specific 74-pose example; independent validation FAIL_CONSISTENCY",
+  "validation_report": "../../../examples/calibration/eye_in_hand/validation_report.json"
+}

@@ -1,0 +1,5 @@
+vendor/sdk-patches/*.patch -whitespace
+vendor/sdk-overlays/** -whitespace
+*.png binary
+*.npz binary
+*.so binary

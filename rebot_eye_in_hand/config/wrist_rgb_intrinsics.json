@@ -1,0 +1,51 @@
+{
+  "camera": {
+    "kind": "realsense",
+    "serial": "332322072170",
+    "name": "RealSense D435",
+    "distortion_model": "distortion.inverse_brown_conrady",
+    "sdk_distortion_coeffs": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "opencv_distortion_interpretation": "pinhole_exact_zero_brown_coefficients",
+    "fps": 30,
+    "stream": "color_only",
+    "image_size": [
+      1280,
+      720
+    ]
+  },
+  "image_size": [
+    1280,
+    720
+  ],
+  "K": [
+    [
+      906.2987670898438,
+      0.0,
+      639.9422607421875
+    ],
+    [
+      0.0,
+      905.4373779296875,
+      376.76641845703125
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "D": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "source_dataset_sha256": "1a8673bd8a0ae56afa6a41b5c1c0c503735665202dbccb98412f4d235f511b6b"
+}

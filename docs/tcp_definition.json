@@ -1,0 +1,73 @@
+{
+  "urdf": "repo://vendor/sdks/modern/urdf/RS/urdf/ReBot_Arm_RS.urdf",
+  "urdf_sha256": "3838ca8f9d586be22a89b33c7cbdd4abd43d4a92a2de377b294eef4c5bd7654d",
+  "fingers": [
+    {
+      "side": "left",
+      "mesh": "local-history/rebot_grasp/sdk/reBotArm_control_py/urdf/RS/meshes/shared/gripper_left.STL",
+      "mesh_sha256": "1f604d582dc23814948c5b07c034672690b78b76acad25f3650d90e3fa8165cd",
+      "bounds_gripper_end_m": [
+        [
+          -0.0886095397991111,
+          -0.0347501348463049,
+          -0.019227115816156534
+        ],
+        [
+          -3.490151961882404e-08,
+          0.05859918058749542,
+          0.019212953558107437
+        ]
+      ],
+      "distal_x_m": -3.5723061606041107e-08,
+      "distal_cap_bbox_center_m": [
+        -3.5723061606041107e-08,
+        -7.323052192134774e-05,
+        1.540649695243746e-07
+      ],
+      "distal_extension_m": -3.572249766809666e-08
+    },
+    {
+      "side": "right",
+      "mesh": "local-history/rebot_grasp/sdk/reBotArm_control_py/urdf/RS/meshes/shared/gripper_right.STL",
+      "mesh_sha256": "b6b5c4df5b71c24e382c602daa977884e4fa1aaa24f7937f5a7d26dea9784aed",
+      "bounds_gripper_end_m": [
+        [
+          -0.08860964041675956,
+          -0.058599180587495414,
+          -0.01921317226288049
+        ],
+        [
+          -3.490151951474063e-08,
+          0.0347501348463049,
+          0.019226882418533292
+        ]
+      ],
+      "distal_x_m": -3.57230615019577e-08,
+      "distal_cap_bbox_center_m": [
+        -3.57230615019577e-08,
+        7.323052192134774e-05,
+        1.5403586569391788e-07
+      ],
+      "distal_extension_m": -3.572249371868515e-08
+    }
+  ],
+  "wrist_motor_center_gripper_end_m": [
+    -0.1662099999988787,
+    -4.48515548567458e-12,
+    -6.105234202203313e-07
+  ],
+  "fingertip_outward_axis_gripper_end": [
+    0.9999999999932537,
+    2.6984871461852955e-11,
+    3.673205103305044e-06
+  ],
+  "tcp_definition": "Midpoint between distal fingertip ends at symmetric opening; outward from wrist motor, local +X nose near gripper_end origin",
+  "recommended_tcp_offset_m": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "supersedes": "Previous analysis incorrectly selected local minimum X (slider/rail at -88.6096 mm) as the distal end",
+  "assumption": "Symmetric finger travel and original modeled fingers. No mapping of gripper motor angle to finger travel is present in URDF. Tips are not a single contact point.",
+  "physical_tcp_verified": false
+}

@@ -1,0 +1,2 @@
+# Use the root environment.yml for Pinocchio and these pip packages.
+-r ../requirements.txt

@@ -1,0 +1,24 @@
+{
+  "repository": "https://github.com/Seeed-Projects/reBotArm_control_py.git",
+  "sdks": {
+    "modern": {
+      "commit": "6415d43130d1e143c70dc106096a857ac5556f81",
+      "patch": "vendor/sdk-patches/modern.patch",
+      "patch_sha256": "7f03da382a0046e80ae939c8b1ab5639fc8edb126309b1db7e2c06304a152ae3",
+      "overlay_files": [
+        "reBotArm_control_py/actuator/motorbridge_feedback.py",
+        "reBotArm_control_py/actuator/rs_feedback.py",
+        "reBotArm_control_py/controllers/cartesian_impedance.py",
+        "reBotArm_control_py/trajectory/joint_motion.py"
+      ],
+      "urdf_sha256": "f0f6ce7594eff46373630ca509672ca96e6919ba903174861fe7801e8a7b411c"
+    },
+    "legacy": {
+      "commit": "d4f3591bc0183de03f3ae8651298db0269aadfdd",
+      "patch": "vendor/sdk-patches/legacy.patch",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "overlay_files": [],
+      "urdf_sha256": "3838ca8f9d586be22a89b33c7cbdd4abd43d4a92a2de377b294eef4c5bd7654d"
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "selected_on": "2026-11-25",
+  "requested_by": "user",
+  "wrist": {
+    "mode": "eye_in_hand",
+    "result": "rebot_eye_in_hand/config/calibration/hand_eye.npz",
+    "sha256": "5e6d436d91276c630aecf83a6eff7cb04c81f9577c0fd8ad8b322a122146daf7",
+    "training_count": 74,
+    "camera_serial": "332322072170",
+    "T_gripper_camera": [
+      [
+        -0.0019776215280432885,
+        -0.5141509480777108,
+        0.8576974359317413,
+        -0.11113135137305248
+      ],
+      [
+        -0.9999816328947965,
+        -0.0038970947204868545,
+        -0.004641823542147594,
+        0.033698005334740426
+      ],
+      [
+        0.0057291261243493374,
+        -0.8576908622828688,
+        -0.5141337976347409,
+        0.09559299325585274
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "translation_units": "meters",
+    "joint_offsets_rad": [
+      0.0,
+      0.04280555679711782,
+      -0.0019013251668914886,
+      -0.030564555499854592,
+      -0.009281164387059075,
+      0.0
+    ],
+    "joint_offsets_deg": [
+      0.0,
+      2.452577744182385,
+      -0.10893790754488918,
+      -1.7512200328350365,
+      -0.5317715483456086,
+      0.0
+    ],
+    "convention": "q_model=q_raw+joint_offsets_rad; motor commands remain raw; raw home remains zero",
+    "independent_validation": {
+      "report": "examples/calibration/eye_in_hand/validation_report.json",
+      "dataset": "rebot_eye_in_hand/runs/eih_auto_validation_06",
+      "count": 57,
+      "status": "FAIL_CONSISTENCY",
+      "summary": {
+        "translation_mm": {
+          "rms": 2.7828416630537,
+          "median": 2.130196023227692,
+          "p95": 4.808936039740755,
+          "max": 6.389269587697226
+        },
+        "rotation_deg": {
+          "rms": 1.9549611485759242,
+          "median": 1.3157326286809108,
+          "p95": 4.153251362398748,
+          "max": 5.221505589858259
+        },
+        "predicted_reprojection_rms_px": {
+          "rms": 4.6460070495771575,
+          "median": 3.171256631243071,
+          "p95": 8.873729746756005,
+          "max": 11.317318309880939
+        }
+      },
+      "axis_errors_mm": {
+        "x": {
+          "rms": 0.7509404245253954,
+          "median": 0.5770492757479762,
+          "p95": 1.5745642215826527,
+          "max": 1.7118170207567895,
+          "signed_mean": 1.1102230246251565e-13
+        },
+        "y": {
+          "rms": 1.2406272781359295,
+          "median": 0.8308295611843576,
+          "p95": 2.5221548425870353,
+          "max": 3.485208926163188,
+          "signed_mean": -4.401936904654129e-15
+        },
+        "z": {
+          "rms": 2.3751084516682885,
+          "median": 1.9231932356996249,
+          "p95": 4.435654482668095,
+          "max": 5.255585433716172,
+          "signed_mean": -3.1164155077197375e-17
+        }
+      }
+    },
+    "physical_accuracy_verified": false,
+    "current_demo_config": "rebot_eye_in_hand/config/aruco_corners.json",
+    "marker_m": 0.06,
+    "marker_id": 0,
+    "corner_clearance_m": 0.003
+  },
+  "external_corner_demo": {
+    "result": "rebot_eye_to_hand/calibration/eye_to_hand_20261125/result.json",
+    "sha256": "6e36bfc5f688e9566a3ecac519c2b09a19252a2407c52a936a16c5ddcfcee600",
+    "config": "rebot_eye_to_hand/aruco_corners_config.json",
+    "selection": "existing user selection retained",
+    "validation_report": "examples/calibration/eye_to_hand/validation_report.json",
+    "physical_accuracy_verified": false,
+    "corner_clearance_m": 0.0005,
+    "original_source_sha256": "2886904c7920ec7448745330eab5ccf6b11dfa8c8f250073698be38d9ed6e04a"
+  },
+  "note": "Example calibration from one installation; matrices and paired joint offsets retained. Not universal robot/camera parameters. Physical accuracy unverified."
+}

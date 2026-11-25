@@ -1,0 +1,97 @@
+{
+  "serial": "250122070127",
+  "sdk_root": "../vendor/sdks/modern",
+  "result": "calibration/eye_to_hand_20261125/result.json",
+  "gravity_config": "gravity_aruco_demo.json",
+  "log_dir": "runs/click_hover",
+  "channel": "can0",
+  "tcp_frame": "gripper_end",
+  "tcp_offset_m": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "tcp_definition": "Midpoint of the two distal fingertip ends at gripper_end origin; local +X points outward from wrist motor. Previous -88.6096 mm offset incorrectly selected the slider/rail end.",
+  "tcp_source": "../docs/tcp_definition.json",
+  "above_axis": "base_link:+Z",
+  "hover_m": 0.098,
+  "workspace_min_m": [
+    -0.5,
+    -0.5,
+    0.03
+  ],
+  "workspace_max_m": [
+    0.65,
+    0.5,
+    0.75
+  ],
+  "max_move_m": 0.6,
+  "max_joint_move_rad": 3.14,
+  "max_joint_speed_rad_s": 0.22,
+  "max_joint_accel_rad_s2": 0.4,
+  "max_tcp_speed_m_s": 0.06,
+  "control_rate_hz": 500,
+  "feedback_max_age_s": 0.15,
+  "tracking_limit_rad": 0.12,
+  "settle_tolerance_m": 0.003,
+  "settle_timeout_s": 5.0,
+  "kp": [
+    50,
+    150,
+    150,
+    50,
+    50,
+    50
+  ],
+  "kd": [
+    3,
+    10,
+    10,
+    5,
+    4,
+    4
+  ],
+  "torque_limit_nm": [
+    20,
+    20,
+    20,
+    4,
+    4,
+    4
+  ],
+  "ui_timeout_s": 0.5,
+  "camera_max_age_s": 0.3,
+  "planning_mode": "sdk_cartesian",
+  "home_tolerance_rad": 0.01,
+  "transit": {
+    "time_scale": 1.0,
+    "home_max_vel_rad_s": 0.5,
+    "home_target_hz": 50.0
+  },
+  "height_reference": "table",
+  "table_reference": null,
+  "height_compensation_m": 0.0,
+  "cartesian_outer_loop": {
+    "enabled": true,
+    "gain_per_s": 1.0,
+    "tolerance_m": 0.001,
+    "deadband_m": 0.0004,
+    "max_tcp_speed_m_s": 0.003,
+    "max_joint_speed_rad_s": 0.02,
+    "max_joint_accel_rad_s2": 0.1,
+    "max_joint_offset_rad": 0.015,
+    "max_tcp_offset_m": 0.008,
+    "capture_radius_m": 0.012,
+    "timeout_s": 10.0,
+    "axes": "xyz",
+    "tracking_rate_hz": 100.0,
+    "tracking_filter_s": 0.08,
+    "tracking_warmup_s": 0.5
+  },
+  "gravity_excluded_urdf_links": [
+    "camera_mount_link",
+    "camera_link"
+  ],
+  "camera_fps": 30,
+  "manual_disable_only": true
+}

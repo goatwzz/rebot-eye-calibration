@@ -1,0 +1,28 @@
+{
+  "tau_scale": [
+    1.0,
+    0.96,
+    0.95,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "kp": 8.0,
+  "kd": 1.0,
+  "linear_release_threshold": 0.04,
+  "angular_release_threshold": 0.08,
+  "payload_mass_kg": 0.0,
+  "payload_frame": "gripper_end",
+  "payload_com_m": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "wrist_camera_mass_kg": 0.11,
+  "wrist_camera_frame": "link6",
+  "wrist_camera_com_m": [
+    0.0,
+    0.0,
+    0.0
+  ]
+}

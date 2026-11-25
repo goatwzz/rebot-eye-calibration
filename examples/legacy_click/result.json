@@ -1,0 +1,1040 @@
+{
+  "schema_version": 1,
+  "convention": "T_A_B maps coordinates from B to A; translation in meters",
+  "T_base_camera": [
+    [
+      -0.010865374768851138,
+      0.9539619084994295,
+      -0.2997309139265726,
+      0.5315663591523728
+    ],
+    [
+      0.9997189474451977,
+      0.016679716751923195,
+      0.01684675541882244,
+      -0.04062666382115655
+    ],
+    [
+      0.021070589697453235,
+      -0.2994636274761956,
+      -0.9538750264414095,
+      0.572377780664604
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_camera_base": [
+    [
+      -0.010865374768851138,
+      0.9997189474451977,
+      0.021070589697453235,
+      0.03433057593187803
+    ],
+    [
+      0.9539619084994295,
+      0.016679716751923195,
+      -0.2994636274761956,
+      -0.3350100907413817
+    ],
+    [
+      -0.2997309139265726,
+      0.01684675541882244,
+      -0.9538750264414095,
+      0.7059881687761637
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_ee_target": [
+    [
+      -0.011376278475449753,
+      -0.9998680263153075,
+      0.01159785499050088,
+      -0.03387589793295652
+    ],
+    [
+      0.9999344430287282,
+      -0.011360424760961663,
+      0.0014319197175521863,
+      0.0001966592451501185
+    ],
+    [
+      -0.0012999741828227463,
+      0.011613384587715816,
+      0.9999317173515108,
+      0.021857719269853245
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "kinematic_correction": {
+    "schema_version": 1,
+    "type": "effective_joint_angle_offsets",
+    "convention": "q_model_rad = q_measured_rad + joint_offsets_rad",
+    "joint_names": [
+      "joint1",
+      "joint2",
+      "joint3",
+      "joint4",
+      "joint5",
+      "joint6"
+    ],
+    "joint_offsets_rad": [
+      0.0,
+      -0.009090843911547533,
+      0.014685886777477295,
+      -0.027939028505485203,
+      -0.00912921359206391,
+      0.0
+    ],
+    "joint_offsets_deg": [
+      0.0,
+      -0.5208669883438743,
+      0.8414393307564302,
+      -1.6007884170600022,
+      -0.5230654090987281,
+      0.0
+    ],
+    "gauge_fixed_joints": [
+      "joint1",
+      "joint6"
+    ],
+    "original_urdf": "repo://vendor/sdks/legacy/urdf/RS/urdf/ReBot_Arm_RS.urdf",
+    "original_urdf_sha256": "3838ca8f9d586be22a89b33c7cbdd4abd43d4a92a2de377b294eef4c5bd7654d",
+    "base_frame": "base_link",
+    "ee_frame": "gripper_end",
+    "training_dataset_id": "merged_8c0ae9361d1dc7a8d1cf5773",
+    "rigid_target_assumed": true,
+    "physical_accuracy_verified": false,
+    "scope": "Effective FK angle correction only; link lengths, axes and compliance not identified. No motor zero or dynamics changes.",
+    "exported_urdf": "repo://vendor/sdks/modern/urdf/RS/urdf/ReBot_Arm_RS.urdf",
+    "exported_urdf_sha256": "1826924abeef6418ad8ad8c6ce332c210142e73426360ca4301de206076978ef",
+    "training_dataset_ids": [
+      "4d10cb2f-401e-4a34-9908-68e0b12986c6",
+      "a5f00465-4b41-45cc-86b4-8d0621c1edba",
+      "8b70ad1b-48d7-4c58-ad94-ad59df72068c",
+      "a04c63ea-8cb8-410c-9bee-db61008208b8"
+    ]
+  },
+  "initial_method": "nominal_reprojection_then_joint_offset_identification",
+  "optimization": {
+    "enabled": true,
+    "success": true,
+    "objective": "image_corners_with_joint_offsets_2_5",
+    "loss": "soft_l1",
+    "f_scale_px": 1.0,
+    "cost": 286.3555877533113,
+    "nfev": 8,
+    "normalized_jacobian_rank": 16,
+    "normalized_jacobian_condition": 94.98454644887836,
+    "samples_removed": 0
+  },
+  "training": {
+    "count": 85,
+    "summary": {
+      "translation_mm": {
+        "rms": 2.0864773942635093,
+        "median": 1.6331468044304156,
+        "p95": 3.1122694877530224,
+        "max": 7.341267512276285
+      },
+      "rotation_deg": {
+        "rms": 1.351480255068828,
+        "median": 1.0155816047589736,
+        "p95": 2.5549276969150263,
+        "max": 3.209373561708165
+      },
+      "predicted_reprojection_rms_px": {
+        "rms": 1.6582102677242336,
+        "median": 1.2945912090144818,
+        "p95": 3.152924711669178,
+        "max": 4.252942070601626
+      }
+    },
+    "samples": [
+      {
+        "id": "5e328157-2e99-47c7-a058-d53f0a69fd5c",
+        "translation_mm": 1.0906281837226974,
+        "rotation_deg": 1.6585372385017507,
+        "predicted_reprojection_rms_px": 0.5565010471721057
+      },
+      {
+        "id": "0624bdcf-c5d3-4594-85c1-c5d1e600e397",
+        "translation_mm": 0.913314372467146,
+        "rotation_deg": 1.7804024241955863,
+        "predicted_reprojection_rms_px": 1.3855253962700749
+      },
+      {
+        "id": "0a87254c-fd38-45bb-8029-c6d160b61c51",
+        "translation_mm": 0.7255253821833115,
+        "rotation_deg": 2.093193355073458,
+        "predicted_reprojection_rms_px": 1.41700837446502
+      },
+      {
+        "id": "54492684-89a6-4dde-9373-26fe56e11797",
+        "translation_mm": 1.8129439310949844,
+        "rotation_deg": 0.5271721639236503,
+        "predicted_reprojection_rms_px": 0.7491911396670276
+      },
+      {
+        "id": "d54b74f9-8746-4044-840e-8aa7a0ffbf7e",
+        "translation_mm": 2.0375733117254,
+        "rotation_deg": 1.2227996240693921,
+        "predicted_reprojection_rms_px": 1.3365025290552335
+      },
+      {
+        "id": "1429cbd5-686b-4421-b174-3cd65a08f97e",
+        "translation_mm": 3.1418762802340727,
+        "rotation_deg": 0.4629095803659765,
+        "predicted_reprojection_rms_px": 0.9651134589859001
+      },
+      {
+        "id": "cec3249b-03c5-4e6d-8dfb-e8d1a02978c8",
+        "translation_mm": 1.1935812392794718,
+        "rotation_deg": 2.0467704026553264,
+        "predicted_reprojection_rms_px": 1.9508745552492128
+      },
+      {
+        "id": "6a2c8def-27e2-4dd5-b078-778ea43d4d96",
+        "translation_mm": 0.4848363477180077,
+        "rotation_deg": 0.6815766275985919,
+        "predicted_reprojection_rms_px": 1.2683411255586787
+      },
+      {
+        "id": "3eadaaa6-3a38-4932-a98d-a50e444311ce",
+        "translation_mm": 2.548124328194962,
+        "rotation_deg": 0.23817009499636424,
+        "predicted_reprojection_rms_px": 0.793924922616637
+      },
+      {
+        "id": "c261ec90-f001-475a-a953-055147cb3ef3",
+        "translation_mm": 2.7659241041865283,
+        "rotation_deg": 1.9734925060180182,
+        "predicted_reprojection_rms_px": 1.1205856766109543
+      },
+      {
+        "id": "82992f41-7f02-4d7a-9f37-7c95997cb4c5",
+        "translation_mm": 2.2701780597450893,
+        "rotation_deg": 3.209373561708165,
+        "predicted_reprojection_rms_px": 1.3303168336742317
+      },
+      {
+        "id": "0f87027e-4b93-4cae-b169-e038a58de6e4",
+        "translation_mm": 7.341267512276285,
+        "rotation_deg": 2.2755104536049084,
+        "predicted_reprojection_rms_px": 1.4117937075110838
+      },
+      {
+        "id": "26592c60-9451-44c3-9ac6-1d51911c199c",
+        "translation_mm": 2.9994518465246953,
+        "rotation_deg": 0.643704502276618,
+        "predicted_reprojection_rms_px": 1.6830994591464081
+      },
+      {
+        "id": "2075b884-7fce-49c9-9660-886417aceb67",
+        "translation_mm": 1.492991618270513,
+        "rotation_deg": 0.9431645810633054,
+        "predicted_reprojection_rms_px": 0.8015654325925257
+      },
+      {
+        "id": "e02c559b-0d38-40f8-b6d0-621f7aa4304f",
+        "translation_mm": 0.5260780433016287,
+        "rotation_deg": 1.0433121258831148,
+        "predicted_reprojection_rms_px": 1.1562058790673235
+      },
+      {
+        "id": "9ba1998d-a0c2-49e9-a41c-903b6d9f0d4b",
+        "translation_mm": 0.6460823523994098,
+        "rotation_deg": 0.520167729578209,
+        "predicted_reprojection_rms_px": 1.2463880411915267
+      },
+      {
+        "id": "7a23bbfa-143c-4560-8ff1-f4645c4a6953",
+        "translation_mm": 1.0614600038452304,
+        "rotation_deg": 0.8358795242020127,
+        "predicted_reprojection_rms_px": 3.2988660409284085
+      },
+      {
+        "id": "545b0a0b-e7de-41b5-949d-6080d06c2c6d",
+        "translation_mm": 0.37944641241700766,
+        "rotation_deg": 0.15644957512189928,
+        "predicted_reprojection_rms_px": 1.5926220713757018
+      },
+      {
+        "id": "5515f8a1-b7ce-4d1f-a6de-70cc5c624213",
+        "translation_mm": 0.3100830696017911,
+        "rotation_deg": 1.2899317920228186,
+        "predicted_reprojection_rms_px": 1.2150209007703248
+      },
+      {
+        "id": "4242da3b-560f-4591-9c45-77170b933413",
+        "translation_mm": 0.4700030886921586,
+        "rotation_deg": 1.1651768806791512,
+        "predicted_reprojection_rms_px": 1.8284792101512282
+      },
+      {
+        "id": "e1c6a136-962f-4269-ae6f-362cb58043c7",
+        "translation_mm": 1.5950458366466762,
+        "rotation_deg": 1.4608544985007563,
+        "predicted_reprojection_rms_px": 1.8862416255443424
+      },
+      {
+        "id": "a8f5a516-4a69-4003-8ee1-1e3bb2747c52",
+        "translation_mm": 1.0850621719537983,
+        "rotation_deg": 0.7191295643824587,
+        "predicted_reprojection_rms_px": 1.8426688325804759
+      },
+      {
+        "id": "c1e4798e-c825-4930-8d99-3af27ebe1fd5",
+        "translation_mm": 1.8641887501987158,
+        "rotation_deg": 0.5438876307117384,
+        "predicted_reprojection_rms_px": 0.7133965578646583
+      },
+      {
+        "id": "ea0a563f-9bac-46e2-9855-a58f1fd1a59a",
+        "translation_mm": 0.5499769480739933,
+        "rotation_deg": 0.9142227087757171,
+        "predicted_reprojection_rms_px": 1.3029999734945545
+      },
+      {
+        "id": "7f97ccfd-d521-499f-acf9-dbedd3aa3462",
+        "translation_mm": 0.5970546639452794,
+        "rotation_deg": 1.2645006396566525,
+        "predicted_reprojection_rms_px": 0.7650357884311928
+      },
+      {
+        "id": "df7fe59c-b987-418c-a2c5-e34c5f2a2e10",
+        "translation_mm": 1.576505871570485,
+        "rotation_deg": 0.49174785531121973,
+        "predicted_reprojection_rms_px": 0.8159239708246999
+      },
+      {
+        "id": "f8612c37-d7bb-48fc-af60-e33738cd3cdf",
+        "translation_mm": 0.8779833553482946,
+        "rotation_deg": 1.2803700211960933,
+        "predicted_reprojection_rms_px": 0.6557286838296071
+      },
+      {
+        "id": "15fd123a-e056-49df-8dff-6ceef981ec4e",
+        "translation_mm": 0.3298496381804028,
+        "rotation_deg": 0.4639027476687494,
+        "predicted_reprojection_rms_px": 1.2945912090144818
+      },
+      {
+        "id": "26553d21-be3c-4c69-9ab0-b1a292dc056b",
+        "translation_mm": 1.173027582327675,
+        "rotation_deg": 0.25048991605280463,
+        "predicted_reprojection_rms_px": 0.43630100044986136
+      },
+      {
+        "id": "b4b0697a-5a4a-498a-9cd2-78b6cdca1afd",
+        "translation_mm": 3.127569489152539,
+        "rotation_deg": 0.8941506803030526,
+        "predicted_reprojection_rms_px": 1.6323682006822886
+      },
+      {
+        "id": "36df238f-9c8c-4162-9e87-e66f0e105ad6",
+        "translation_mm": 2.558718943377164,
+        "rotation_deg": 0.34129028222752844,
+        "predicted_reprojection_rms_px": 2.794187170595077
+      },
+      {
+        "id": "0a6bb333-6420-4137-9c1a-880fc6e8c284",
+        "translation_mm": 1.3583015444204225,
+        "rotation_deg": 0.6778965604757835,
+        "predicted_reprojection_rms_px": 0.9425324402075907
+      },
+      {
+        "id": "f5b24f02-9740-4b2b-a187-f7b224d13c2a",
+        "translation_mm": 1.5689562366619247,
+        "rotation_deg": 1.7724043934515994,
+        "predicted_reprojection_rms_px": 0.6933437063331132
+      },
+      {
+        "id": "3041bfa9-a6a2-41e7-8a15-693ebb085954",
+        "translation_mm": 0.5720981054945813,
+        "rotation_deg": 1.8062360135878839,
+        "predicted_reprojection_rms_px": 1.084170250022228
+      },
+      {
+        "id": "bd93c366-95f6-4cd9-b8be-101a26b5681d",
+        "translation_mm": 2.5343281616977085,
+        "rotation_deg": 0.35476828286045253,
+        "predicted_reprojection_rms_px": 0.628401072737766
+      },
+      {
+        "id": "699dfb54-39c5-41a8-91b5-7f53c7766f0f",
+        "translation_mm": 0.6916788973687142,
+        "rotation_deg": 0.9844622558794339,
+        "predicted_reprojection_rms_px": 1.5089808479726072
+      },
+      {
+        "id": "b4117986-956d-48b4-92d7-1ccae9b90c4f",
+        "translation_mm": 3.159578007710269,
+        "rotation_deg": 2.6018654588024623,
+        "predicted_reprojection_rms_px": 2.3698535253739355
+      },
+      {
+        "id": "5551cd0e-cf73-4c0d-bbc0-1295e00462ae",
+        "translation_mm": 2.4623349556690886,
+        "rotation_deg": 0.3331605859194113,
+        "predicted_reprojection_rms_px": 0.5521328999115742
+      },
+      {
+        "id": "16e58228-74b8-4893-8024-2f3d3b3cb7d5",
+        "translation_mm": 1.7139132351419848,
+        "rotation_deg": 0.8053976050316884,
+        "predicted_reprojection_rms_px": 1.6791130725283165
+      },
+      {
+        "id": "b34bfa20-0f6b-47e8-a34e-b7087cfe8d63",
+        "translation_mm": 0.5740840289390651,
+        "rotation_deg": 1.0893013128106046,
+        "predicted_reprojection_rms_px": 1.069206940622039
+      },
+      {
+        "id": "64c352f6-9e37-4483-a146-2d895e3fe4f2",
+        "translation_mm": 1.4524733651592003,
+        "rotation_deg": 0.7471420337398255,
+        "predicted_reprojection_rms_px": 0.46786781867662963
+      },
+      {
+        "id": "a510af26-331a-42fc-9750-0aec8b6da26c",
+        "translation_mm": 1.8057717329499057,
+        "rotation_deg": 3.177802243449695,
+        "predicted_reprojection_rms_px": 1.4611177892707492
+      },
+      {
+        "id": "77198420-bb69-4d0c-b515-9eb762f5eded",
+        "translation_mm": 3.0166490040212475,
+        "rotation_deg": 1.1011820605861848,
+        "predicted_reprojection_rms_px": 0.773834833870994
+      },
+      {
+        "id": "3d5315ce-7519-44b4-b9b5-69c3d55eb9f6",
+        "translation_mm": 1.3318266778044237,
+        "rotation_deg": 1.5143507829374667,
+        "predicted_reprojection_rms_px": 1.6855571974281804
+      },
+      {
+        "id": "a94c1afe-d9df-44bb-9493-d3ee732dc46a",
+        "translation_mm": 0.6663433913547019,
+        "rotation_deg": 2.8497404156025743,
+        "predicted_reprojection_rms_px": 1.2707899687791615
+      },
+      {
+        "id": "b8d10416-903a-4b3e-95b9-5ce75d0aad0d",
+        "translation_mm": 2.6871650049350584,
+        "rotation_deg": 1.8636907519096941,
+        "predicted_reprojection_rms_px": 0.8806075931804308
+      },
+      {
+        "id": "19125019-5506-41fa-8fb5-26f5fc5d7fb6",
+        "translation_mm": 2.7380561982664244,
+        "rotation_deg": 0.4451031488931396,
+        "predicted_reprojection_rms_px": 0.9273993039701812
+      },
+      {
+        "id": "66701fa9-6e53-409e-8b87-bc9734ac48f6",
+        "translation_mm": 1.7190219691766229,
+        "rotation_deg": 0.46436088171129214,
+        "predicted_reprojection_rms_px": 3.0750737065639284
+      },
+      {
+        "id": "9ed72d04-69c6-4c89-86db-7bf14e0db5bc",
+        "translation_mm": 2.933604175231798,
+        "rotation_deg": 0.14299344872354552,
+        "predicted_reprojection_rms_px": 0.720079729945138
+      },
+      {
+        "id": "03d545a3-9f85-4c69-9946-309391688b90",
+        "translation_mm": 2.726099619400752,
+        "rotation_deg": 1.7630194824532377,
+        "predicted_reprojection_rms_px": 3.1723874629454905
+      },
+      {
+        "id": "6d3f8ab2-5c39-428c-9cc1-b6ddbd6e93c3",
+        "translation_mm": 1.0762439824017132,
+        "rotation_deg": 1.4296082025773171,
+        "predicted_reprojection_rms_px": 2.311123246972337
+      },
+      {
+        "id": "c7fff246-a139-45b6-b152-807f1f85b990",
+        "translation_mm": 2.5865978737220274,
+        "rotation_deg": 0.7046343397463484,
+        "predicted_reprojection_rms_px": 1.5489631707853024
+      },
+      {
+        "id": "e97e3c92-bb19-4bb4-8641-c032bffe1841",
+        "translation_mm": 1.2101010242305121,
+        "rotation_deg": 1.835453076204719,
+        "predicted_reprojection_rms_px": 0.9546688210341621
+      },
+      {
+        "id": "0c44debc-759e-4663-a3e6-d8ce7845c0ba",
+        "translation_mm": 0.5680626580823843,
+        "rotation_deg": 1.0155816047589736,
+        "predicted_reprojection_rms_px": 0.5483109820947013
+      },
+      {
+        "id": "e5816e40-02aa-45a0-988b-257f4838ff30",
+        "translation_mm": 0.8342723142410456,
+        "rotation_deg": 0.21374370440251836,
+        "predicted_reprojection_rms_px": 2.7530445434370288
+      },
+      {
+        "id": "7b6b7f64-ab86-4e2f-9b0e-ccb3da070412",
+        "translation_mm": 1.2843787679675787,
+        "rotation_deg": 0.5333775920957674,
+        "predicted_reprojection_rms_px": 0.527541547164123
+      },
+      {
+        "id": "7b16c0ef-8681-4c9d-93d0-dc2b4e05c6b2",
+        "translation_mm": 1.9479441353076887,
+        "rotation_deg": 0.2106788269338376,
+        "predicted_reprojection_rms_px": 0.41439235949211684
+      },
+      {
+        "id": "081ec9fa-abbd-42a4-a39a-ba696f1d8e4c",
+        "translation_mm": 2.4289257208332913,
+        "rotation_deg": 0.38298608530115213,
+        "predicted_reprojection_rms_px": 0.8141818815773559
+      },
+      {
+        "id": "6c5a0228-9e07-484c-9c22-3e7098369db9",
+        "translation_mm": 1.898454810249768,
+        "rotation_deg": 1.2184426096560004,
+        "predicted_reprojection_rms_px": 1.3818827496612078
+      },
+      {
+        "id": "85b0d123-70d6-46f8-8520-a646a55cb055",
+        "translation_mm": 2.6292629396726492,
+        "rotation_deg": 0.9129547304919643,
+        "predicted_reprojection_rms_px": 1.6827633433096016
+      },
+      {
+        "id": "935eb5d3-955f-458b-ab56-175279c3f21d",
+        "translation_mm": 2.9636808248858357,
+        "rotation_deg": 0.42523553066363906,
+        "predicted_reprojection_rms_px": 2.1180936273309166
+      },
+      {
+        "id": "c309d12c-69de-4951-bbee-8793df7ec272",
+        "translation_mm": 1.1591655678439072,
+        "rotation_deg": 2.1596617436264434,
+        "predicted_reprojection_rms_px": 1.8142983958308896
+      },
+      {
+        "id": "9fc9d7ec-cb82-4eff-ad5e-58538dda0044",
+        "translation_mm": 0.8657649161026207,
+        "rotation_deg": 1.9868509751057928,
+        "predicted_reprojection_rms_px": 1.5010191070623522
+      },
+      {
+        "id": "9ce8c55b-00c0-4660-8819-cdd91d878182",
+        "translation_mm": 2.6767683283418484,
+        "rotation_deg": 1.2205866395229286,
+        "predicted_reprojection_rms_px": 3.0750175320905364
+      },
+      {
+        "id": "028988ef-2646-408e-86b6-f507a5c3f2c7",
+        "translation_mm": 1.788219592267735,
+        "rotation_deg": 1.1530514849443843,
+        "predicted_reprojection_rms_px": 2.677800926002642
+      },
+      {
+        "id": "e2147256-ebab-415b-88e6-ee219a3b1db7",
+        "translation_mm": 3.051069482154955,
+        "rotation_deg": 0.5143530963748094,
+        "predicted_reprojection_rms_px": 0.5997234079974617
+      },
+      {
+        "id": "e0c7c818-0400-4da4-86a0-63ed2d047236",
+        "translation_mm": 2.083714907974948,
+        "rotation_deg": 0.4072257280734369,
+        "predicted_reprojection_rms_px": 1.5828964211357552
+      },
+      {
+        "id": "8b2c416f-a68f-4a6a-9c7a-3afdf5b1eedf",
+        "translation_mm": 4.866804764838618,
+        "rotation_deg": 1.7951046448454286,
+        "predicted_reprojection_rms_px": 1.154654788800158
+      },
+      {
+        "id": "f4f9ae1c-0fe2-4b51-a9a6-1217316eb77e",
+        "translation_mm": 2.074892954878715,
+        "rotation_deg": 0.3239652880705933,
+        "predicted_reprojection_rms_px": 0.49629398136610436
+      },
+      {
+        "id": "10dce709-2100-41bf-83b6-bad7baa79ab5",
+        "translation_mm": 1.654236698942428,
+        "rotation_deg": 1.1638378001143594,
+        "predicted_reprojection_rms_px": 1.1664784816181897
+      },
+      {
+        "id": "5437a503-0955-4007-a4f6-55f6fdb34f2b",
+        "translation_mm": 0.804927883724112,
+        "rotation_deg": 1.2219238894973412,
+        "predicted_reprojection_rms_px": 0.6124973490503877
+      },
+      {
+        "id": "c2394fe4-b2ee-4550-b7c8-d7b129d1c418",
+        "translation_mm": 2.7848050099665294,
+        "rotation_deg": 0.3792664567747566,
+        "predicted_reprojection_rms_px": 0.5634761721823597
+      },
+      {
+        "id": "9957d71e-312f-4966-b552-c58b9a021a5e",
+        "translation_mm": 2.2710124393831723,
+        "rotation_deg": 1.714153915280424,
+        "predicted_reprojection_rms_px": 3.9780726568554328
+      },
+      {
+        "id": "752e6ccf-0ad7-4d33-8e32-54c60fbd91d8",
+        "translation_mm": 2.9100468624845273,
+        "rotation_deg": 0.3889840185424098,
+        "predicted_reprojection_rms_px": 1.498454487116512
+      },
+      {
+        "id": "b23b663d-bdde-46fc-90e3-aec230894a5b",
+        "translation_mm": 3.028312299006739,
+        "rotation_deg": 0.3677189482167623,
+        "predicted_reprojection_rms_px": 1.2266710138546315
+      },
+      {
+        "id": "a06f2d2d-52e5-4a9d-8a5c-9db2238d7333",
+        "translation_mm": 3.0340184235652066,
+        "rotation_deg": 2.8660855856479555,
+        "predicted_reprojection_rms_px": 2.358080676660933
+      },
+      {
+        "id": "3d138c79-3af6-4de0-80ce-6622f09245f9",
+        "translation_mm": 1.0329431959937152,
+        "rotation_deg": 1.131713703883092,
+        "predicted_reprojection_rms_px": 1.308397808966098
+      },
+      {
+        "id": "08df92ad-bb7d-4655-bb9a-c0c97c07c101",
+        "translation_mm": 1.74546763891016,
+        "rotation_deg": 0.5233622078914114,
+        "predicted_reprojection_rms_px": 0.8928524511012498
+      },
+      {
+        "id": "588cb396-5a0a-426b-9b95-824d28502443",
+        "translation_mm": 1.1283822960737144,
+        "rotation_deg": 0.5887413172603327,
+        "predicted_reprojection_rms_px": 0.9641643261417597
+      },
+      {
+        "id": "202865a6-b938-40e3-8aef-9623bc0d797b",
+        "translation_mm": 0.6182551762779804,
+        "rotation_deg": 1.9984675302784503,
+        "predicted_reprojection_rms_px": 1.38166397519656
+      },
+      {
+        "id": "66df86ab-cf05-46fc-98a4-40016677292c",
+        "translation_mm": 1.0635605159245098,
+        "rotation_deg": 0.4425757712344264,
+        "predicted_reprojection_rms_px": 1.77315059921718
+      },
+      {
+        "id": "aadc4eb2-0fe7-4a13-9aa2-7fa2cf5abec4",
+        "translation_mm": 0.5184809468257306,
+        "rotation_deg": 1.0969784824122015,
+        "predicted_reprojection_rms_px": 1.1578719386340868
+      },
+      {
+        "id": "55bf1304-927a-4920-86a5-a55642677ea6",
+        "translation_mm": 0.7160652866587396,
+        "rotation_deg": 1.293426347929585,
+        "predicted_reprojection_rms_px": 1.8230728658363393
+      },
+      {
+        "id": "66552e75-45ca-4fc8-ac55-7aec78b1ff34",
+        "translation_mm": 1.6331468044304156,
+        "rotation_deg": 2.367176649365285,
+        "predicted_reprojection_rms_px": 3.3547013723849157
+      },
+      {
+        "id": "4975f187-268a-4116-9e28-e52150e13bde",
+        "translation_mm": 1.7557061766406579,
+        "rotation_deg": 1.9723403735265579,
+        "predicted_reprojection_rms_px": 4.252942070601626
+      }
+    ]
+  },
+  "training_ids": [
+    "5e328157-2e99-47c7-a058-d53f0a69fd5c",
+    "0624bdcf-c5d3-4594-85c1-c5d1e600e397",
+    "0a87254c-fd38-45bb-8029-c6d160b61c51",
+    "54492684-89a6-4dde-9373-26fe56e11797",
+    "d54b74f9-8746-4044-840e-8aa7a0ffbf7e",
+    "1429cbd5-686b-4421-b174-3cd65a08f97e",
+    "cec3249b-03c5-4e6d-8dfb-e8d1a02978c8",
+    "6a2c8def-27e2-4dd5-b078-778ea43d4d96",
+    "3eadaaa6-3a38-4932-a98d-a50e444311ce",
+    "c261ec90-f001-475a-a953-055147cb3ef3",
+    "82992f41-7f02-4d7a-9f37-7c95997cb4c5",
+    "0f87027e-4b93-4cae-b169-e038a58de6e4",
+    "26592c60-9451-44c3-9ac6-1d51911c199c",
+    "2075b884-7fce-49c9-9660-886417aceb67",
+    "e02c559b-0d38-40f8-b6d0-621f7aa4304f",
+    "9ba1998d-a0c2-49e9-a41c-903b6d9f0d4b",
+    "7a23bbfa-143c-4560-8ff1-f4645c4a6953",
+    "545b0a0b-e7de-41b5-949d-6080d06c2c6d",
+    "5515f8a1-b7ce-4d1f-a6de-70cc5c624213",
+    "4242da3b-560f-4591-9c45-77170b933413",
+    "e1c6a136-962f-4269-ae6f-362cb58043c7",
+    "a8f5a516-4a69-4003-8ee1-1e3bb2747c52",
+    "c1e4798e-c825-4930-8d99-3af27ebe1fd5",
+    "ea0a563f-9bac-46e2-9855-a58f1fd1a59a",
+    "7f97ccfd-d521-499f-acf9-dbedd3aa3462",
+    "df7fe59c-b987-418c-a2c5-e34c5f2a2e10",
+    "f8612c37-d7bb-48fc-af60-e33738cd3cdf",
+    "15fd123a-e056-49df-8dff-6ceef981ec4e",
+    "26553d21-be3c-4c69-9ab0-b1a292dc056b",
+    "b4b0697a-5a4a-498a-9cd2-78b6cdca1afd",
+    "36df238f-9c8c-4162-9e87-e66f0e105ad6",
+    "0a6bb333-6420-4137-9c1a-880fc6e8c284",
+    "f5b24f02-9740-4b2b-a187-f7b224d13c2a",
+    "3041bfa9-a6a2-41e7-8a15-693ebb085954",
+    "bd93c366-95f6-4cd9-b8be-101a26b5681d",
+    "699dfb54-39c5-41a8-91b5-7f53c7766f0f",
+    "b4117986-956d-48b4-92d7-1ccae9b90c4f",
+    "5551cd0e-cf73-4c0d-bbc0-1295e00462ae",
+    "16e58228-74b8-4893-8024-2f3d3b3cb7d5",
+    "b34bfa20-0f6b-47e8-a34e-b7087cfe8d63",
+    "64c352f6-9e37-4483-a146-2d895e3fe4f2",
+    "a510af26-331a-42fc-9750-0aec8b6da26c",
+    "77198420-bb69-4d0c-b515-9eb762f5eded",
+    "3d5315ce-7519-44b4-b9b5-69c3d55eb9f6",
+    "a94c1afe-d9df-44bb-9493-d3ee732dc46a",
+    "b8d10416-903a-4b3e-95b9-5ce75d0aad0d",
+    "19125019-5506-41fa-8fb5-26f5fc5d7fb6",
+    "66701fa9-6e53-409e-8b87-bc9734ac48f6",
+    "9ed72d04-69c6-4c89-86db-7bf14e0db5bc",
+    "03d545a3-9f85-4c69-9946-309391688b90",
+    "6d3f8ab2-5c39-428c-9cc1-b6ddbd6e93c3",
+    "c7fff246-a139-45b6-b152-807f1f85b990",
+    "e97e3c92-bb19-4bb4-8641-c032bffe1841",
+    "0c44debc-759e-4663-a3e6-d8ce7845c0ba",
+    "e5816e40-02aa-45a0-988b-257f4838ff30",
+    "7b6b7f64-ab86-4e2f-9b0e-ccb3da070412",
+    "7b16c0ef-8681-4c9d-93d0-dc2b4e05c6b2",
+    "081ec9fa-abbd-42a4-a39a-ba696f1d8e4c",
+    "6c5a0228-9e07-484c-9c22-3e7098369db9",
+    "85b0d123-70d6-46f8-8520-a646a55cb055",
+    "935eb5d3-955f-458b-ab56-175279c3f21d",
+    "c309d12c-69de-4951-bbee-8793df7ec272",
+    "9fc9d7ec-cb82-4eff-ad5e-58538dda0044",
+    "9ce8c55b-00c0-4660-8819-cdd91d878182",
+    "028988ef-2646-408e-86b6-f507a5c3f2c7",
+    "e2147256-ebab-415b-88e6-ee219a3b1db7",
+    "e0c7c818-0400-4da4-86a0-63ed2d047236",
+    "8b2c416f-a68f-4a6a-9c7a-3afdf5b1eedf",
+    "f4f9ae1c-0fe2-4b51-a9a6-1217316eb77e",
+    "10dce709-2100-41bf-83b6-bad7baa79ab5",
+    "5437a503-0955-4007-a4f6-55f6fdb34f2b",
+    "c2394fe4-b2ee-4550-b7c8-d7b129d1c418",
+    "9957d71e-312f-4966-b552-c58b9a021a5e",
+    "752e6ccf-0ad7-4d33-8e32-54c60fbd91d8",
+    "b23b663d-bdde-46fc-90e3-aec230894a5b",
+    "a06f2d2d-52e5-4a9d-8a5c-9db2238d7333",
+    "3d138c79-3af6-4de0-80ce-6622f09245f9",
+    "08df92ad-bb7d-4655-bb9a-c0c97c07c101",
+    "588cb396-5a0a-426b-9b95-824d28502443",
+    "202865a6-b938-40e3-8aef-9623bc0d797b",
+    "66df86ab-cf05-46fc-98a4-40016677292c",
+    "aadc4eb2-0fe7-4a13-9aa2-7fa2cf5abec4",
+    "55bf1304-927a-4920-86a5-a55642677ea6",
+    "66552e75-45ca-4fc8-ac55-7aec78b1ff34",
+    "4975f187-268a-4116-9e28-e52150e13bde"
+  ],
+  "training_dataset_id": "merged_8c0ae9361d1dc7a8d1cf5773",
+  "provenance": {
+    "target": {
+      "type": "aruco",
+      "dictionary": "DICT_4X4_50",
+      "id": 0,
+      "marker_m": 0.06
+    },
+    "image_size": [
+      1280,
+      720
+    ],
+    "camera": {
+      "kind": "realsense",
+      "serial": "250122070127",
+      "name": "RealSense D435",
+      "distortion_model": "distortion.inverse_brown_conrady",
+      "sdk_distortion_coeffs": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "opencv_distortion_interpretation": "pinhole_exact_zero_brown_coefficients"
+    },
+    "robot": {
+      "source": "original-gravity-controller-plus-readonly-mechPos",
+      "base_frame": "base_link",
+      "ee_frame": "gripper_end",
+      "channel": "can0",
+      "urdf": "repo://vendor/sdks/legacy/urdf/RS/urdf/ReBot_Arm_RS.urdf",
+      "urdf_sha256": "3838ca8f9d586be22a89b33c7cbdd4abd43d4a92a2de377b294eef4c5bd7654d",
+      "joint_names": [
+        "joint1",
+        "joint2",
+        "joint3",
+        "joint4",
+        "joint5",
+        "joint6"
+      ],
+      "reference_script": "local-history/rebot_grasp/scripts/collect_handeye_eih.py",
+      "reference_controller_ast_sha256": "4d8766c3133bb9e4d49a8359305c7587ef2f6363605913d750e362a2f0f97c47",
+      "sdk_path": "local-history/rebot_grasp/sdk/reBotArm_control_py",
+      "sdk_control_rate_hz": 500.0,
+      "control_algorithm": "Original start/_worker; private point-payload model and gravity scale/gains from independent local configuration",
+      "gravity_parameters": {
+        "kp": 8.0,
+        "kd": 1.0,
+        "linear_release_threshold": 0.04,
+        "angular_release_threshold": 0.08,
+        "tau_scale": [
+          1.0,
+          0.98,
+          0.95,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "payload_mass_kg": 0.016,
+        "payload_frame": "gripper_end",
+        "payload_com_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "wrist_camera_mass_kg": 0.16,
+        "wrist_camera_frame": "link6",
+        "wrist_camera_com_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "config_path": "local-history/robot_sim/rebot_eye_to_hand/gravity_config.json",
+        "config_sha256": "8acdb22daaf50f26c43979e093ab0570eb051332f2f1d071a8ab6ebefb1a3fd4",
+        "scope": "ArUco and wrist camera point masses added separately before gravity scaling; original integral/lock law retained"
+      },
+      "calibration_reader": "Separate read-only controller; no register reads in SDK control callback",
+      "gripper_controlled": true,
+      "automatic_homing": false
+    },
+    "K": [
+      [
+        911.4237060546875,
+        0.0,
+        656.587890625
+      ],
+      [
+        0.0,
+        909.2822265625,
+        380.4680480957031
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "D": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "synthetic": false
+  },
+  "warnings": [
+    "Use this result with its paired kinematic correction. This is not full URDF geometric calibration or a motor-zero calibration."
+  ],
+  "acceptance": "FAIL_CURRENT_THRESHOLDS: grouped cross-validation; physical accuracy unverified",
+  "training_dataset_sha256": "530c025a3e3b31d45598f9881fa9450ebe0a2ba79ecdf92b2a0983a346659f48",
+  "training_dataset_ids": [
+    "4d10cb2f-401e-4a34-9908-68e0b12986c6",
+    "a5f00465-4b41-45cc-86b4-8d0621c1edba",
+    "8b70ad1b-48d7-4c58-ad94-ad59df72068c",
+    "a04c63ea-8cb8-410c-9bee-db61008208b8"
+  ],
+  "source_runs": [
+    {
+      "name": "train_03",
+      "path": "local-history/robot_sim/rebot_eye_to_hand/runs/train_03/dataset.json",
+      "sha256": "e01cc2d1d09e35c6b5323d5d3da1d12e2b18d2009a292803d2a60ed672049ad7",
+      "dataset_id": "4d10cb2f-401e-4a34-9908-68e0b12986c6",
+      "count": 40,
+      "gravity_parameters": {
+        "kp": 8.0,
+        "kd": 1.0,
+        "linear_release_threshold": 0.04,
+        "angular_release_threshold": 0.08,
+        "tau_scale": [
+          1.0,
+          0.98,
+          0.95,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "payload_mass_kg": 0.016,
+        "payload_frame": "gripper_end",
+        "payload_com_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "wrist_camera_mass_kg": 0.16,
+        "wrist_camera_frame": "link6",
+        "wrist_camera_com_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "config_path": "local-history/robot_sim/rebot_eye_to_hand/gravity_config.json",
+        "config_sha256": "8acdb22daaf50f26c43979e093ab0570eb051332f2f1d071a8ab6ebefb1a3fd4",
+        "scope": "ArUco and wrist camera point masses added separately before gravity scaling; original integral/lock law retained"
+      }
+    },
+    {
+      "name": "validation_03",
+      "path": "local-history/robot_sim/rebot_eye_to_hand/runs/validation_03/dataset.json",
+      "sha256": "cb8c646738195fce0d16846eed61979032e205629a1913d50c48531d8c7f6a57",
+      "dataset_id": "a5f00465-4b41-45cc-86b4-8d0621c1edba",
+      "count": 15,
+      "gravity_parameters": {
+        "kp": 8.0,
+        "kd": 1.0,
+        "linear_release_threshold": 0.04,
+        "angular_release_threshold": 0.08,
+        "tau_scale": [
+          1.0,
+          0.98,
+          0.95,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "payload_mass_kg": 0.016,
+        "payload_frame": "gripper_end",
+        "payload_com_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "wrist_camera_mass_kg": 0.16,
+        "wrist_camera_frame": "link6",
+        "wrist_camera_com_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "config_path": "local-history/robot_sim/rebot_eye_to_hand/gravity_config.json",
+        "config_sha256": "8acdb22daaf50f26c43979e093ab0570eb051332f2f1d071a8ab6ebefb1a3fd4",
+        "scope": "ArUco and wrist camera point masses added separately before gravity scaling; original integral/lock law retained"
+      }
+    },
+    {
+      "name": "validation_task_01",
+      "path": "local-history/robot_sim/rebot_eye_to_hand/runs/validation_task_01/dataset.json",
+      "sha256": "ccf18d845ce9b38780f5312ebecd59d4d60cefce3f05e2ddcfcf7ca684566c75",
+      "dataset_id": "8b70ad1b-48d7-4c58-ad94-ad59df72068c",
+      "count": 15,
+      "gravity_parameters": {
+        "kp": 8.0,
+        "kd": 1.0,
+        "linear_release_threshold": 0.04,
+        "angular_release_threshold": 0.08,
+        "tau_scale": [
+          1.0,
+          0.96,
+          0.95,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "payload_mass_kg": 0.016,
+        "payload_frame": "gripper_end",
+        "payload_com_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "wrist_camera_mass_kg": 0.16,
+        "wrist_camera_frame": "link6",
+        "wrist_camera_com_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "config_path": "local-history/robot_sim/rebot_eye_to_hand/gravity_config.json",
+        "config_sha256": "7f08a5484a00351bff39d8706f4c509ba57ae36210ac4fde1293835400a86ed1",
+        "scope": "ArUco and wrist camera point masses added separately before gravity scaling; original integral/lock law retained"
+      }
+    },
+    {
+      "name": "validation_kinematic_01",
+      "path": "local-history/robot_sim/rebot_eye_to_hand/runs/validation_kinematic_01/dataset.json",
+      "sha256": "81ef5ff52f6e7341b522a26e88b797d28d1048e3dfe5c5b83064b6dd5b8abb3a",
+      "dataset_id": "a04c63ea-8cb8-410c-9bee-db61008208b8",
+      "count": 15,
+      "gravity_parameters": {
+        "kp": 8.0,
+        "kd": 1.0,
+        "linear_release_threshold": 0.04,
+        "angular_release_threshold": 0.08,
+        "tau_scale": [
+          1.0,
+          0.96,
+          0.95,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "payload_mass_kg": 0.016,
+        "payload_frame": "gripper_end",
+        "payload_com_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "wrist_camera_mass_kg": 0.16,
+        "wrist_camera_frame": "link6",
+        "wrist_camera_com_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "config_path": "local-history/robot_sim/rebot_eye_to_hand/gravity_config.json",
+        "config_sha256": "7f08a5484a00351bff39d8706f4c509ba57ae36210ac4fde1293835400a86ed1",
+        "scope": "ArUco and wrist camera point masses added separately before gravity scaling; original integral/lock law retained"
+      }
+    }
+  ],
+  "test_report": "cross_validation.json",
+  "physical_accuracy_verified": false
+}

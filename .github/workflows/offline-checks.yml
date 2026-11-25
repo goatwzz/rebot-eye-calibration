@@ -1,0 +1,25 @@
+name: Offline geometry and control checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+      - name: Prepare pinned official SDKs without hardware
+        shell: bash -el {0}
+        run: python tools/bootstrap_sdks.py
+      - name: Verify release models
+        shell: bash -el {0}
+        run: python tools/verify_release.py
+      - name: Offline tests (no camera or CAN)
+        shell: bash -el {0}
+        run: python tools/run_offline_checks.py

@@ -1,0 +1,25 @@
+{
+  "base_config": "click_hover.json",
+  "log_dir": "../runs/aruco_corners",
+  "dictionary": "DICT_4X4_50",
+  "marker_id": 0,
+  "marker_m": 0.06,
+  "height_mode": "corner",
+  "clearance_m": 0.003,
+  "max_pnp_rms_px": 1.0,
+  "ambiguity_gap_px": 0.15,
+  "stable_samples": 5,
+  "corner_span_m": 0.003,
+  "stationary_s": 0.5,
+  "joint_span_rad": 0.002,
+  "down_pitches_deg": [
+    90,
+    75,
+    60,
+    45,
+    30,
+    15
+  ],
+  "home_position_tolerance_m": 0.009,
+  "home_tolerance_rad": 0.016
+}

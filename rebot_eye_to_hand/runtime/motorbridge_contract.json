@@ -1,0 +1,30 @@
+{
+  "upstream_commit": "d5700bcd5b7f9355dd2012488d463c3bac982259",
+  "wheel_sha256": "31216d43c53a0d71481af074644f93f5535f4319e5140605f7aa9fc83882441c",
+  "version": "0.5.6+snapshot.d5700bc",
+  "files": {
+    "runtime/LICENSE.motorbridge": "9b0f2103caa4190c598c25a7effed4c62464cbc15e5efcf397d2ac21897f327c",
+    "runtime/python/motorbridge/models.py": "596735d47597528ef047102d6e123b42fe2a272004a31ae7ed0dcd263fc08069",
+    "runtime/python/motorbridge/platform_hints.py": "c3b283de64fcaabe0a9b237fb987767ecbed232f024615177a6fa2a769453f2d",
+    "runtime/python/motorbridge/dm_device_runtime.py": "5309814779c3d8d031c7106f3e763479d293e2d329a62241db846b30a9ff2216",
+    "runtime/python/motorbridge/_version.py": "38fd0b56190d76416548c6d4363bd4b7dea3e7205527f13649307ec2874740b4",
+    "runtime/python/motorbridge/core.py": "5ef7c7bcf42a38a92a938914bf982c2c3acce4d11671cc98f3b34583a9f5e931",
+    "runtime/python/motorbridge/abi.py": "b4ca87166b3de70016a62a6ab213a7f01c7ab5572a0c9d8a3aa7c070c352b053",
+    "runtime/python/motorbridge/gateway.py": "72887152e7845aca051afca515653b78f08997c4038b2b82bef0fd4fb04562aa",
+    "runtime/python/motorbridge/__init__.py": "fd47970412b66d5aa742425164cd10cd5ff12be1e168a4485619ee62b81c961e",
+    "runtime/python/motorbridge/__main__.py": "c2ee4ddb093c9af060cafaf68219907f8a6b7b301ed3f8bea75db7555adec987",
+    "runtime/python/motorbridge/errors.py": "2b3ec29930db42602947fee9b3b68a407d214f80a98464733de3196750003818",
+    "runtime/python/motorbridge/damiao_registers.py": "305f3f524407f78f133d528c3125b0d37139d86d1545a88c6985905ea39b6d53",
+    "runtime/python/motorbridge/lib/libmotor_abi.so": "3ee023ef005d1c4f62f7c02431589c5808216c44942720419cd368f5a4b08bc3",
+    "runtime/python/motorbridge/cli/id_ops.py": "843a98354c2d7ed37929603e05eb4adb3cbc6029fd601c01c8aca18eb8a83112",
+    "runtime/python/motorbridge/cli/common.py": "78636b2fbfe6e4f3b71420b529dacd2cf4a00510da298916d81b52fc2325d79e",
+    "runtime/python/motorbridge/cli/robstride.py": "0c48a2a77f951d01ec4ec1783962f850f39112b20401e821d4b68c0561dbd50a",
+    "runtime/python/motorbridge/cli/damiao.py": "041bac7564d925181c5b689f2052d81846ae9974732f4222a74e452afdd349d6",
+    "runtime/python/motorbridge/cli/scan.py": "0cf95555d4e761d8a357b16fb2fefbd5417fc2d92f029903467c1cdbd8405fd3",
+    "runtime/python/motorbridge/cli/main.py": "20c6431cdcd09c1ea5b8f606e2ca14a00bfdcd9f022f90f11a371ce82d316cde",
+    "runtime/python/motorbridge/cli/__init__.py": "e7244a5e81f21d4861046bce8baa753981c5ae970a7f2715742ce8c66d5a6e9c",
+    "runtime/python/motorbridge/cli/__main__.py": "aacea4378ad7817cadcd5968f670de0bcb66e5d6823fcc4f2f6961500073ba23",
+    "runtime/python/motorbridge/cli/run.py": "bdf385367a420d759c594c71af176704f95a0d1bdd49a0918a378d9f73458447"
+  },
+  "provenance": "Unmodified upstream MotorBridge runtime reused from the working rebot_real_visual_servo project; isolated to eye calibration demo processes."
+}

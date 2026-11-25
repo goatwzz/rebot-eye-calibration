@@ -1,0 +1,739 @@
+diff --git a/config/rebotarm_rs.yaml b/config/rebotarm_rs.yaml
+index 782e44b..11323cd 100644
+--- a/config/rebotarm_rs.yaml
++++ b/config/rebotarm_rs.yaml
+@@ -142,6 +142,18 @@ gravity_compensation:
+ 
+   # Example 9: compliant gravity compensation.
+   profiles:
++    # Example 11: Cartesian impedance; MIT joint PD during move/home only.
++    # kp: N*m/rad, kd: N*m*s/rad. Independent of the generic MIT gains above.
++    cartesian_impedance:
++      cartesian_stiffness: [100.0, 100.0, 100.0, 3.0, 3.0, 3.0]
++      cartesian_damping: [12.0, 12.0, 12.0, 0.15, 0.4, 0.4]
++      compensate_coriolis: true
++      tau_scale: [1.0, 1.02, 1.07, 1.0, 1.0, 1.0]
++      mit_move_kp: [30.0, 70.0, 70.0, 15.0, 15.0, 10.0]
++      mit_move_kd: [3.0, 6.0, 6.0, 1.0, 1.0, 0.3]
++      mit_hold_kp: [7.5, 15.0, 15.0, 4.0, 4.0, 2.5]
++      mit_hold_kd: [3.0, 6.0, 6.0, 1.0, 1.0, 0.3]
++
+     basic:
+       kp: 15.0
+       kd: 2.5
+@@ -151,11 +163,19 @@ gravity_compensation:
+ 
+     # Example 10: gravity compensation with EE velocity lock.
+     velocity_lock:
++      # Gripper damping only (kp=0); does not hold the opening position.
++      gripper_kd: 0.0
++      # During safe_home, actively close the gripper to motor position 0.
++      gripper_home_kp: 10.0
++      gripper_home_kd: 0.2
++      gripper_home_settle: 1.5  # Keep refreshing commands and checking fresh feedback.
++      gripper_home_max_vel: 0.5  # Motor rad/s; independent of the arm homing duration.
++      gripper_home_min_duration: 2.0  # Seconds, minimum-jerk closing with velocity feedforward.
+       kp: 8.0
+       kd: 1.0
+       ki: 1.0
+       integral_limit: 0.3
+-      tau_scale: [1.0, 0.98, 0.98, 1.0, 1.0, 1.0]
++      tau_scale: [1.0, 1.02, 0.95, 1.0, 1.0, 1.0]
+       transition_duration: 0.5
+       linear_release_threshold: 0.04
+       angular_release_threshold: 0.08
+diff --git a/reBotArm_control_py/actuator/rebotarm.py b/reBotArm_control_py/actuator/rebotarm.py
+index 3c6be3e..a419812 100644
+--- a/reBotArm_control_py/actuator/rebotarm.py
++++ b/reBotArm_control_py/actuator/rebotarm.py
+@@ -193,7 +193,7 @@ class NoOpGroup:
+     def mode(self) -> str:
+         return "mit"
+ 
+-    def enable(self) -> None:
++    def enable(self, *, strict: bool = False) -> None:
+         pass
+ 
+     def disable(self) -> None:
+@@ -211,7 +211,8 @@ class NoOpGroup:
+         self._mode = "vel"
+         return True
+ 
+-    def send_mit(self, pos, vel=None, kp=None, kd=None, tau=None) -> None:
++    def send_mit(self, pos, vel=None, kp=None, kd=None, tau=None, *, strict=False,
++                 cancelled=None) -> None:
+         pass
+ 
+     def send_pos_vel(self, pos, vlim=None) -> None:
+@@ -220,7 +221,8 @@ class NoOpGroup:
+     def send_vel(self, vel) -> None:
+         pass
+ 
+-    def get_positions(self) -> np.ndarray:
++    def get_positions(self, request_feedback=True, *, fresh=False, strict=False,
++                      timeout_ms=20) -> np.ndarray:
+         return np.array([], dtype=np.float64)
+ 
+     def get_velocities(self) -> np.ndarray:
+@@ -280,7 +282,7 @@ class JointGroup:
+ 
+     # ── 使能 / 失能 ────────────────────────────────────────────────────
+ 
+-    def enable(self) -> None:
++    def enable(self, *, strict: bool = False) -> None:
+         by_vendor: Dict[str, List[str]] = {}
+         for jc in self._jcfgs:
+             by_vendor.setdefault(jc.vendor, []).append(jc.name)
+@@ -288,6 +290,8 @@ class JointGroup:
+             try:
+                 self._cm[vendor].enable_all()
+             except CallError as e:
++                if strict:
++                    raise
+                 print(f"[{self.name}/enable] {e}")
+             time.sleep(0.05)
+ 
+@@ -386,6 +390,7 @@ class JointGroup:
+         kp: Optional[np.ndarray] = None,
+         kd: Optional[np.ndarray] = None,
+         tau: Optional[np.ndarray] = None,
++        *, strict: bool = False, cancelled: Optional[Callable[[], bool]] = None,
+     ) -> None:
+         n = self.num_joints
+         pos = np.asarray(pos, dtype=np.float64).reshape(-1)
+@@ -397,8 +402,18 @@ class JointGroup:
+             kp = self._mit_kp
+         if kd is None:
+             kd = self._mit_kd
++        if strict:
++            pos, vel, kp, kd, tau = (
++                np.asarray(value, dtype=np.float64).reshape(-1)
++                for value in (pos, vel, kp, kd, tau)
++            )
++            if any(value.shape != (n,) or not np.all(np.isfinite(value))
++                   for value in (pos, vel, kp, kd, tau)):
++                raise ValueError(f"{self.name} MIT 指令必须为 {n} 个有限数值")
+ 
+         for i, jc in enumerate(self._jcfgs):
++            if cancelled is not None and cancelled():
++                raise InterruptedError(f'{self.name} MIT 批次已取消: next_joint={jc.name}')
+             try:
+                 self._mm[jc.name].send_mit(
+                     float(pos[i]),
+@@ -408,7 +423,8 @@ class JointGroup:
+                     float(tau[i]),
+                 )
+             except CallError:
+-                pass
++                if strict:
++                    raise
+ 
+     # ── POS_VEL 发送 ───────────────────────────────────────────────────
+ 
+@@ -462,25 +478,47 @@ class JointGroup:
+                 pass
+         self._poll_feedback()
+ 
+-    def get_positions(self, request_feedback: bool = True) -> np.ndarray:
+-        # 始终发送显式请求帧 + 处理接收队列
+-        # motorbridge 内部会针对 RS/DM 分别处理
+-        self._request_feedback()
++    def get_positions(self, request_feedback: bool = True, *, fresh: bool = False,
++                      strict: bool = False, timeout_ms: int = 20) -> np.ndarray:
++        """读取组位置；fresh 在 RS 上查询 mechPos，strict 禁止缺失时填零。
++
++        默认保持缓存/回退行为。控制器需要确定的真实位置时使用
++        get_positions(fresh=True, strict=True)，不把 RS 缓存当成实时反馈。
++        """
++        if fresh and any(jc.vendor != "robstride" for jc in self._jcfgs):
++            raise NotImplementedError("fresh 位置查询当前仅支持 RobStride mechPos")
++        if not fresh:
++            # 保留原有调用的请求/缓存回退语义。
++            self._request_feedback()
+         
+         out: list[float] = []
+         for jc in self._jcfgs:
+             m = self._mm[jc.name]
++            if fresh and jc.vendor == "robstride":
++                value = float(m.robstride_get_param_f32(0x7019, timeout_ms=timeout_ms))
++                if not np.isfinite(value):
++                    raise ValueError(f"{jc.name} 位置反馈无效")
++                out.append(value)
++                continue
+             st = m.get_state()
+             if st is not None:
++                if strict and not np.isfinite(st.pos):
++                    raise ValueError(f"{jc.name} 位置反馈无效")
+                 out.append(st.pos)
+             else:
+                 # 缓存为空时回退到 SDO 读取（安全兜底）
+                 if jc.vendor == "robstride":
+                     try:
+-                        out.append(float(m.robstride_get_param_f32(0x7019)))
++                        value = float(m.robstride_get_param_f32(0x7019))
++                        if strict and not np.isfinite(value):
++                            raise ValueError(f"{jc.name} 位置反馈无效")
++                        out.append(value)
+                         continue
+                     except CallError:
+-                        pass
++                        if strict:
++                            raise
++                if strict:
++                    raise RuntimeError(f"{jc.name} 缺少位置反馈")
+                 out.append(0.0)
+         return np.array(out, dtype=np.float64)
+ 
+@@ -655,13 +693,27 @@ class RebotArm:
+ 
+     # ── 全局使能 / 失能 ────────────────────────────────────────────────
+ 
+-    def enable_all(self) -> None:
+-        for g in self._groups.values():
+-            g.enable()
++    def enable_all(self, *, strict: bool = False) -> None:
++        self._set_all_enabled(True, strict=strict)
++
++    def disable_all(self, *, strict: bool = False) -> None:
++        self._set_all_enabled(False, strict=strict)
+ 
+-    def disable_all(self) -> None:
+-        for g in self._groups.values():
+-            g.disable()
++    def _set_all_enabled(self, enabled: bool, *, strict: bool) -> None:
++        # arm 和 gripper 可共享控制器；SDK 的 *_all 已覆盖该控制器的全部电机。
++        seen = set()
++        action = 'enable' if enabled else 'disable'
++        for vendor, ctrl in self._ctrl_map.items():
++            if id(ctrl) in seen:
++                continue
++            seen.add(id(ctrl))
++            try:
++                (ctrl.enable_all if enabled else ctrl.disable_all)()
++            except CallError as exc:
++                if strict:
++                    raise
++                print(f'[{vendor}/{action}] {exc}')
++            time.sleep(0.05)
+ 
+     # ── 零点 ────────────────────────────────────────────────────────────
+ 
+@@ -735,19 +787,34 @@ class RebotArm:
+ 
+     # ── 生命周期 ────────────────────────────────────────────────────────
+ 
+-    def disconnect(self) -> None:
++    def disconnect(self, *, before_close: Optional[Callable[[], None]] = None,
++                   control_timeout: Optional[float] = None) -> None:
++        """Stop control, request disable, then clean up while SDK handles are open.
++
++        before_close is for ancillary hardware cleanup, such as active reports.
++        Controllers are closed even if that cleanup raises an exception.
++        """
+         if not self._connected:
++            if before_close is not None:
++                before_close()
+             return
+-        self.stop_control_loop()
++        if control_timeout is None:
++            self.stop_control_loop()
++        else:
++            self.stop_control_loop(timeout=control_timeout)
+         self.disable_all()
+-        time.sleep(0.5)
+-        for ctrl in self._ctrl_map.values():
+-            ctrl.shutdown()
+-            time.sleep(0.1)
+-            ctrl.close()
+-        self._ctrl_map.clear()
+-        self._motor_map.clear()
+-        self._connected = False
++        try:
++            if before_close is not None:
++                before_close()
++        finally:
++            time.sleep(0.5)
++            for ctrl in self._ctrl_map.values():
++                ctrl.shutdown()
++                time.sleep(0.1)
++                ctrl.close()
++            self._ctrl_map.clear()
++            self._motor_map.clear()
++            self._connected = False
+ 
+     def estop(self) -> None:
+         self.disable_all()
+@@ -801,23 +868,28 @@ class RebotArm:
+ 
+     def _control_loop_impl(self) -> None:
+         dt = 1.0 / self._ctrl_rate
++        deadline = time.perf_counter()
+         while self._running:
+-            t0 = time.perf_counter()
+             try:
+                 self._ctrl_fn(self, dt)
+             except Exception:
+                 if self._running:
+                     raise
+-            elapsed = time.perf_counter() - t0
+-            sleep_time = dt - elapsed
++            deadline += dt
++            now = time.perf_counter()
++            if now > deadline:
++                deadline += (int((now-deadline)/dt)+1)*dt
++            sleep_time = deadline-now
+             if sleep_time > 0:
+                 time.sleep(sleep_time)
+ 
+-    def stop_control_loop(self) -> None:
++    def stop_control_loop(self, timeout: float = 5.0) -> None:
++        if not np.isfinite(timeout) or timeout < 0:
++            raise ValueError('timeout 必须为非负有限数')
+         self._running = False
+         t = getattr(self, "_ctrl_thread", None)
+         if t is not None and t.is_alive():
+-            t.join(timeout=5.0)
++            t.join(timeout=timeout)
+ 
+     # ── 上下文管理器 ───────────────────────────────────────────────────────
+ 
+diff --git a/reBotArm_control_py/controllers/__init__.py b/reBotArm_control_py/controllers/__init__.py
+index eeb8d4e..a52e412 100644
+--- a/reBotArm_control_py/controllers/__init__.py
++++ b/reBotArm_control_py/controllers/__init__.py
+@@ -2,5 +2,6 @@
+ 
+ from .gravity_compensation import GravityCompensation
+ from .rebotarm_endpose_controller import RebotArmEndPose
++from .cartesian_impedance import CartesianImpedanceController
+ 
+-__all__ = ["GravityCompensation", "RebotArmEndPose"]
+\ No newline at end of file
++__all__ = ["GravityCompensation", "RebotArmEndPose", "CartesianImpedanceController"]
+diff --git a/reBotArm_control_py/controllers/gravity_compensation.py b/reBotArm_control_py/controllers/gravity_compensation.py
+index cedd119..80b765b 100644
+--- a/reBotArm_control_py/controllers/gravity_compensation.py
++++ b/reBotArm_control_py/controllers/gravity_compensation.py
+@@ -37,6 +37,7 @@ import numpy as np
+ 
+ from ..actuator import RebotArm
+ from ..dynamics import compute_generalized_gravity
++from ..trajectory.joint_motion import minimum_jerk_profile
+ 
+ DEFAULT_KP = 2.0
+ DEFAULT_KD = 1.0
+@@ -114,11 +115,13 @@ class GravityCompensation:
+         q_hold = robot.arm.get_positions().copy()
+         tau_hold = self._gravity_comp_torque(q_hold)
+ 
+-        robot.arm.mode_mit()
+-        if robot.has_gripper:
+-            robot.gripper.mode_mit()
++        # Some RS firmware ignores mode changes while torque is enabled.
+         robot.disable_all()
+         time.sleep(0.1)
++        if not robot.arm.mode_mit():
++            raise RuntimeError("机械臂切换 MIT 模式失败，未使能电机")
++        if robot.has_gripper:
++            self._configure_gripper_mit()
+         if self._enabled_joints:
+             for name in self._enabled_joints:
+                 if name in robot._motor_map:
+@@ -145,6 +148,11 @@ class GravityCompensation:
+         self._transition_started_at = time.perf_counter()
+         self._running = True
+ 
++    def _configure_gripper_mit(self) -> None:
++        """Configure gripper gains also used by end() and safe_home()."""
++        if not self.rebotarm.gripper.mode_mit():
++            raise RuntimeError("夹爪切换 MIT 模式失败，未使能电机")
++
+     def end(self) -> None:
+         """停止重力补偿并维持当前位置（与网页停止重补行为一致）。
+ 
+@@ -251,70 +259,208 @@ class GravityCompensation:
+     # safe shutdown — minimum-jerk home before disconnect
+     # ------------------------------------------------------------------
+ 
++    @staticmethod
++    def _home_profile(elapsed: float, duration: float) -> tuple[float, float]:
++        """Quintic position blend and its derivative (1/s), zero at endpoints."""
++        return minimum_jerk_profile(elapsed, duration)
++
++    def _read_gripper_home_positions(self) -> np.ndarray:
++        """For RS homing, read mechPos explicitly instead of trusting cached state."""
++        robot = self.rebotarm
++        result = []
++        fallback = None
++        for i, jc in enumerate(robot.gripper._jcfgs):
++            if jc.vendor == "robstride":
++                value = robot._motor_map[jc.name].robstride_get_param_f32(
++                    0x7019, timeout_ms=100,
++                )
++            else:
++                if fallback is None:
++                    fallback = robot.gripper.get_positions()
++                value = fallback[i]
++            result.append(float(value))
++        q = np.asarray(result, dtype=np.float64)
++        if q.shape != (robot.gripper.num_joints,) or not np.all(np.isfinite(q)):
++            raise RuntimeError("夹爪归零位置反馈无效")
++        return q
++
+     def safe_home(
+         self,
+         max_vel: float = 0.5,
+         send_freq: float = 50.0,
+         settle: float = 0.5,
+         timeout: float = 15.0,
++        *,
++        gripper_target: float | Sequence[float] | None = None,
++        gripper_kp: float | Sequence[float] | None = None,
++        gripper_kd: float | Sequence[float] | None = None,
++        gripper_max_vel: float | None = None,
++        gripper_min_duration: float = 0.5,
+     ) -> None:
+         """Minimum-jerk 归零轨迹 + 重力前馈。
+ 
+         从当前位置平滑运动到零位，使用刚性增益保持稳定。
+         应在 ``end()`` 之后、``disconnect()`` 之前调用。
++        gripper_target 非 None 时，夹爪也沿轨迹运动到该电机角度；
++        默认 None 保留原有夹爪行为。不会重设电机零点。
++        夹爪轨迹独立计时，发送解析速度前馈；max_vel 单位均为电机 rad/s。
+         """
+         if self._hold_kp is None:
+             raise RuntimeError("safe_home() 需先调用 start()")
++        if (not all(np.isfinite(x) and x > 0 for x in (max_vel, send_freq, timeout))
++                or not np.isfinite(settle) or settle < 0):
++            raise ValueError("归零速度、频率、超时必须为有限正数，settle 不得为负")
++        grip_max_vel = max_vel if gripper_max_vel is None else gripper_max_vel
++        if (not np.isfinite(grip_max_vel) or grip_max_vel <= 0
++                or not np.isfinite(gripper_min_duration) or gripper_min_duration <= 0):
++            raise ValueError("夹爪归零速度及最短时长必须为有限正数")
+         robot = self.rebotarm
+         q_hold = robot.arm.get_positions().copy()
+         n = robot.arm.num_joints
+         home = np.zeros(n)
+         kp = self._hold_kp
+         kd = self._hold_kd
++        grip_start = grip_home = None
++        grip_kp = grip_kd = None
++        if robot.has_gripper and gripper_target is not None:
++            ng = robot.gripper.num_joints
++            grip_start = self._read_gripper_home_positions()
++            grip_home = self._resolve_vector(gripper_target, ng, "gripper_target")
++            if not np.all(np.isfinite(grip_start)) or not np.all(np.isfinite(grip_home)):
++                raise ValueError("夹爪归零位置必须为有限数值")
++            grip_kp = self._resolve_vector(
++                robot.gripper._mit_kp if gripper_kp is None else gripper_kp, ng, "gripper_kp",
++            )
++            grip_kd = self._resolve_vector(
++                robot.gripper._mit_kd if gripper_kd is None else gripper_kd, ng, "gripper_kd",
++            )
++            if (not np.all(np.isfinite(grip_kp)) or np.any(grip_kp <= 0)
++                    or not np.all(np.isfinite(grip_kd)) or np.any(grip_kd < 0)):
++                raise ValueError("主动闭合夹爪需要正 kp 和非负有限 kd")
++            print(
++                f"[gripper_home] start={np.round(grip_start, 4)} rad "
++                f"target={np.round(grip_home, 4)} rad kp={grip_kp} kd={grip_kd}"
++            )
++
++        last_grip_send = None
++        max_grip_gap = 0.0
++
++        def send_gripper(position: np.ndarray | None = None,
++                         velocity: np.ndarray | None = None) -> None:
++            nonlocal last_grip_send, max_grip_gap
++            if not robot.has_gripper:
++                return
++            if grip_home is None:
++                robot.gripper.send_mit(robot.gripper.get_positions())
++            else:
++                target = grip_start if position is None else position
++                target_velocity = np.zeros_like(target) if velocity is None else velocity
++                now = time.monotonic()
++                if last_grip_send is not None:
++                    max_grip_gap = max(max_grip_gap, now-last_grip_send)
++                last_grip_send = now
++                # JointGroup.send_mit swallows CallError; closing must report
++                # failed writes, not later misreport them as a position error.
++                for i, name in enumerate(robot.gripper.joint_names):
++                    robot._motor_map[name].send_mit(
++                        float(target[i]), float(target_velocity[i]),
++                        float(grip_kp[i]), float(grip_kd[i]), 0.0,
++                    )
+ 
+         # Hold current position briefly to stabilize before moving.
+         tau_hold = self._gravity_comp_torque(q_hold)
+-        robot.arm.send_mit(q_hold, vel=np.zeros(n), kp=kp, kd=kd, tau=tau_hold)
+-        if robot.has_gripper:
+-            robot.gripper.send_mit(robot.gripper.get_positions())
+-        time.sleep(0.3)
++        dt_send = 1.0/send_freq
++        hold_until = time.monotonic()+0.3
++        while True:
++            tick = time.monotonic()
++            send_gripper()
++            robot.arm.send_mit(q_hold, vel=np.zeros(n), kp=kp, kd=kd, tau=tau_hold)
++            if time.monotonic() >= hold_until:
++                break
++            time.sleep(max(0.0, min(dt_send, hold_until-tick)-(time.monotonic()-tick)))
+ 
+         q_err = np.abs(home - q_hold)
+         max_err = float(np.max(q_err))
+-        if max_err < 0.01:
++        if max_err < 0.01 and grip_home is None:
+             return
+ 
+-        t_ramp = max_err / max_vel
+-        t_total = t_ramp * 2.0
+-        dt_send = 1.0 / send_freq
+-        num_steps = max(2, int(t_total / dt_send))
+-        interval = t_total / num_steps
+-
+-        deadline = time.monotonic() + timeout
++        t_arm = max_err/max_vel*2.0
++        t_gripper = 0.0
++        if grip_home is not None:
++            distance = float(np.max(np.abs(grip_home-grip_start)))
++            # Quintic peak velocity = 1.875 * displacement / duration.
++            t_gripper = max(gripper_min_duration, 1.875*distance/grip_max_vel)
++        t_total = max(t_arm, t_gripper)
++        if t_total > timeout:
++            raise TimeoutError(f"归零轨迹需要 {t_total:.1f}s，超过 timeout={timeout:.1f}s")
+         print(
+             f"[safe_home] 归零轨迹 / homing trajectory: "
+-            f"{num_steps} steps @ {send_freq:.0f} Hz, {t_total:.1f}s"
++            f"@ {send_freq:.0f} Hz, arm={t_arm:.2f}s, gripper={t_gripper:.2f}s"
+         )
+-        for i in range(num_steps):
+-            if time.monotonic() > deadline:
+-                print("[safe_home] 超时 / timeout")
+-                break
+-            s = (i + 1) / num_steps
+-            # Minimum-jerk: q(s) = q0 + Δq * (10s³ - 15s⁴ + 6s⁵)
+-            q_traj = q_hold + (home - q_hold) * (
+-                10.0 * s ** 3 - 15.0 * s ** 4 + 6.0 * s ** 5
+-            )
++        started = time.monotonic()
++        deadline = started+timeout
++        while True:
++            tick = time.monotonic()
++            if tick > deadline:
++                raise TimeoutError("safe_home 超时，未继续发送最终零位指令")
++            elapsed = tick-started
++            if grip_home is not None:
++                blend_g, speed_g = self._home_profile(elapsed, t_gripper)
++                # Send gripper first; no feedback reads on the moving path.
++                send_gripper(grip_start+(grip_home-grip_start)*blend_g,
++                             (grip_home-grip_start)*speed_g)
++            blend, _ = self._home_profile(elapsed, t_arm)
++            q_traj = q_hold + (home - q_hold) * blend
+             tau_traj = self._gravity_comp_torque(q_traj)
+             robot.arm.send_mit(
+                 q_traj, vel=np.zeros(n), kp=kp, kd=kd, tau=tau_traj
+             )
+-            if robot.has_gripper:
+-                robot.gripper.send_mit(robot.gripper.get_positions())
+-            time.sleep(interval)
++            if grip_home is None:
++                send_gripper()
++            if elapsed >= t_total:
++                break
++            # Spend only the remaining period sleeping; do not add I/O time
++            # to every nominal 20 ms interval. No catch-up packet bursts.
++            time.sleep(max(0.0, dt_send-(time.monotonic()-tick)))
+ 
+         # Settle at zero before cutting power.
+         robot.arm.send_mit(home, vel=np.zeros(n), kp=kp, kd=kd, tau=np.zeros(n))
+-        time.sleep(settle)
++        send_gripper(grip_home)
++        if grip_home is None:
++            time.sleep(settle)
++            return
++
++        # Continue sending during settling, so firmware watchdogs do not see
++        # a single final command followed by a silent sleep. Read fresh RS
++        # feedback and require three consecutive in-tolerance samples.
++        settle_deadline = time.monotonic() + settle
++        consecutive_arrived = 0
++        for i in range(max(3, int(np.ceil(settle*send_freq))+1)):
++            tick = time.monotonic()
++            robot.arm.send_mit(home, vel=np.zeros(n), kp=kp, kd=kd, tau=np.zeros(n))
++            send_gripper(grip_home)
++            grip_actual = self._read_gripper_home_positions()
++            grip_error = grip_home-grip_actual
++            if i == 0:
++                print(f"[gripper_home] actual={np.round(grip_actual, 4)} rad "
++                      f"error={np.round(grip_error, 4)} rad (target-actual)")
++            consecutive_arrived = consecutive_arrived+1 if np.max(np.abs(grip_error)) <= 0.05 else 0
++            if consecutive_arrived >= 3:
++                print(f"[gripper_home] 到位: actual={np.round(grip_actual, 4)} rad "
++                      f"error={np.round(grip_error, 4)} rad (容差 0.05 rad), "
++                      f"max_command_gap={1000*max_grip_gap:.1f}ms")
++                return
++            if time.monotonic() >= settle_deadline:
++                break
++            time.sleep(max(0.0, 1.0/send_freq-(time.monotonic()-tick)))
++        raise RuntimeError(
++            "夹爪未到目标零位（容差 0.05 rad）: "
++            f"target={np.round(grip_home, 4)} rad, "
++            f"actual={np.round(grip_actual, 4)} rad, "
++            f"error={np.round(grip_error, 4)} rad, kp={grip_kp}, kd={grip_kd}。"
++            f"最大主机指令间隔={1000*max_grip_gap:.1f}ms。"
++            "请根据实际开合情况检查驱动执行、闭合增益及电机闭合零点；不会自动重设零点。"
++        )
+ 
+     def _loop_cb(self, robot: RebotArm, dt: float) -> None:
+         del dt
+diff --git a/reBotArm_control_py/trajectory/__init__.py b/reBotArm_control_py/trajectory/__init__.py
+index 8ed8014..b362207 100644
+--- a/reBotArm_control_py/trajectory/__init__.py
++++ b/reBotArm_control_py/trajectory/__init__.py
+@@ -3,6 +3,7 @@
+ 提供 SE(3) 测地线轨迹采样与 CLIK 关节空间跟踪。
+ """
+ 
++from .joint_motion import JointMotion, minimum_jerk_profile
+ from .sampler import (
+     TrajProfile,
+     TrajPlanParams,
+@@ -23,6 +24,8 @@ from .trajectory_planner import (
+ )
+ 
+ __all__ = [
++    "JointMotion",
++    "minimum_jerk_profile",
+     # 采样器
+     "TrajProfile",
+     "TrajPlanParams",
+diff --git a/urdf/RS/urdf/ReBot_Arm_RS.urdf b/urdf/RS/urdf/ReBot_Arm_RS.urdf
+index b0a1fce..bbce5c4 100755
+--- a/urdf/RS/urdf/ReBot_Arm_RS.urdf
++++ b/urdf/RS/urdf/ReBot_Arm_RS.urdf
+@@ -541,7 +541,7 @@
+         xyz="-0.112751692515958 0.000128443070436966 -5.72602449749882E-06"
+         rpy="0 0 0" />
+       <mass
+-        value="0.65" />
++        value="0.65" />
+       <inertia
+         ixx="0.00037354"
+         ixy="-0.00000011"
+@@ -769,4 +769,116 @@
+       effort="500"
+       velocity="10" />
+   </joint>
++
++  <!-- Wrist D435 assembly: official reBot mount/poses and RealSense mesh.
++       User-set total payload: 0.160 kg (mount/screws 0.088 + D435 0.072).
++       COM/inertias: uniform bounding-box approximations, not measured.
++       Optical transforms: nominal, not device calibration.
++       See ../WRIST_CAMERA.md for provenance and adjustment points. -->
++  <material name="rs_camera_mount_orange">
++    <color rgba="1.0 0.30 0.015 1" />
++  </material>
++  <link name="camera_mount_link">
++    <visual>
++      <origin rpy="0 0 0" xyz="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/camera/D435_Gemini2_Mount.stl" scale="0.001 0.001 0.001" />
++      </geometry>
++      <material name="rs_camera_mount_orange" />
++    </visual>
++    <collision>
++      <origin rpy="0 0 0" xyz="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/camera/D435_Gemini2_Mount.stl" scale="0.001 0.001 0.001" />
++      </geometry>
++    </collision>
++    <inertial>
++      <origin xyz="-1.420974731e-05 0.02784469986 0.006721610069" rpy="0 0 0" />
++      <mass value="0.088" />
++      <inertia ixx="0.000100597177262" iyy="9.82358333125e-05" izz="0.000136858426606" ixy="0" ixz="0" iyz="0" />
++    </inertial>
++  </link>
++  <joint name="gripper_to_mount" type="fixed">
++    <parent link="gripper_end" />
++    <child link="camera_mount_link" />
++    <origin rpy="1.5827 0.0024 1.5515" xyz="-0.1201 0.0003 0.0450" />
++  </joint>
++  <joint name="camera_joint" type="fixed">
++    <origin rpy="0.0126 -1.0489 -1.5981" xyz="-0.0003 0.0445 -0.0095" />
++    <parent link="camera_mount_link" />
++    <child link="camera_bottom_screw_frame" />
++  </joint>
++  <link name="camera_bottom_screw_frame" />
++  <joint name="camera_link_joint" type="fixed">
++    <origin rpy="0 0 0" xyz="0.010600000000000002 0.0175 0.0125" />
++    <parent link="camera_bottom_screw_frame" />
++    <child link="camera_link" />
++  </joint>
++  <link name="camera_link">
++    <visual>
++      <origin rpy="1.5707963267948966 0 1.5707963267948966" xyz="0.0043 -0.0175 0" />
++      <geometry>
++        <mesh filename="../meshes/camera/d435.dae" />
++      </geometry>
++    </visual>
++    <collision>
++      <origin rpy="0 0 0" xyz="0 -0.0175 0" />
++      <geometry>
++        <box size="0.02505 0.09 0.025" />
++      </geometry>
++    </collision>
++    <inertial>
++      <origin xyz="0 -0.0175 0" rpy="0 0 0" />
++      <mass value="0.072" />
++      <inertia ixx="5.235e-05" iyy="7.515015e-06" izz="5.2365015e-05" ixy="0" ixz="0" iyz="0" />
++    </inertial>
++  </link>
++  <joint name="camera_depth_joint" type="fixed">
++    <origin rpy="0 0 0" xyz="0 0 0" />
++    <parent link="camera_link" />
++    <child link="camera_depth_frame" />
++  </joint>
++  <link name="camera_depth_frame" />
++  <joint name="camera_depth_optical_joint" type="fixed">
++    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0" />
++    <parent link="camera_depth_frame" />
++    <child link="camera_depth_optical_frame" />
++  </joint>
++  <link name="camera_depth_optical_frame" />
++  <joint name="camera_infra1_joint" type="fixed">
++    <origin rpy="0 0 0" xyz="0 0.0 0" />
++    <parent link="camera_link" />
++    <child link="camera_infra1_frame" />
++  </joint>
++  <link name="camera_infra1_frame" />
++  <joint name="camera_infra1_optical_joint" type="fixed">
++    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0" />
++    <parent link="camera_infra1_frame" />
++    <child link="camera_infra1_optical_frame" />
++  </joint>
++  <link name="camera_infra1_optical_frame" />
++  <joint name="camera_infra2_joint" type="fixed">
++    <origin rpy="0 0 0" xyz="0 -0.05 0" />
++    <parent link="camera_link" />
++    <child link="camera_infra2_frame" />
++  </joint>
++  <link name="camera_infra2_frame" />
++  <joint name="camera_infra2_optical_joint" type="fixed">
++    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0" />
++    <parent link="camera_infra2_frame" />
++    <child link="camera_infra2_optical_frame" />
++  </joint>
++  <link name="camera_infra2_optical_frame" />
++  <joint name="camera_color_joint" type="fixed">
++    <origin rpy="0 0 0" xyz="0 0.015 0" />
++    <parent link="camera_link" />
++    <child link="camera_color_frame" />
++  </joint>
++  <link name="camera_color_frame" />
++  <joint name="camera_color_optical_joint" type="fixed">
++    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0" />
++    <parent link="camera_color_frame" />
++    <child link="camera_color_optical_frame" />
++  </joint>
++  <link name="camera_color_optical_frame" />
+ </robot>

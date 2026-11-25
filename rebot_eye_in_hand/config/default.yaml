@@ -1,0 +1,33 @@
+camera:
+  type: realsense_d435i
+  serial: '332322072170'
+  color_width: 1280
+  color_height: 720
+  fps: 30
+calibration:
+  aruco:
+    marker_length_m: 0.06
+    dict_id: 0
+    dictionary: DICT_4X4_50
+    target_marker_id: 0
+  hand_eye_compensation_m:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+paths:
+  sdk: ../vendor/sdks/legacy
+  gravity: config/gravity.json
+  result: config/calibration/hand_eye.npz
+acquisition:
+  settle_s: 1.0
+  static_mm: 0.5
+  static_deg: 0.2
+  max_pnp_px: 1.0
+  ambiguity_gap_px: 0.15
+  camera_timeout_ms: 1000
+  camera_timeout_retries: 9
+validation:
+  min_samples: 15
+  translation_p95_mm: 3.0
+  rotation_p95_deg: 1.0
+  reprojection_p95_px: 3.0

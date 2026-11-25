@@ -1,0 +1,301 @@
+{
+  "base_config": "click_hover_config.json",
+  "gravity_config": "gravity_collection.json",
+  "urdf": "../vendor/sdks/modern/urdf/RS/urdf/ReBot_Arm_RS.urdf",
+  "serial": "250122070127",
+  "fps": 30,
+  "target": {
+    "type": "aruco",
+    "dictionary": "DICT_4X4_50",
+    "id": 0,
+    "marker_m": 0.06
+  },
+  "stationary_s": 0.6,
+  "static_mm": 0.5,
+  "static_deg": 0.15,
+  "joint_span_rad": 0.002,
+  "observation_timeout_s": 8.0,
+  "max_pnp_px": 1.0,
+  "ambiguity_gap_px": 0.15,
+  "min_tcp_z_m": 0.12,
+  "min_move_duration_s": 3.0,
+  "pose_source": "Configured train_poses/validation_poses arrays; adapted from official collection demonstration",
+  "train_poses": [],
+  "validation_poses": [
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.418,
+        -0.065,
+        0.285,
+        0.03,
+        0.55,
+        -0.05
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.418,
+        0,
+        0.285,
+        0.03,
+        0.5,
+        0.07
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.418,
+        0.065,
+        0.285,
+        -0.03,
+        0.65,
+        0.1
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.446,
+        -0.06,
+        0.26,
+        0.04,
+        0.7,
+        -0.1
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.446,
+        0,
+        0.26,
+        -0.04,
+        0.8,
+        0.07
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.446,
+        0.06,
+        0.26,
+        0.04,
+        0.7,
+        0.12
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.43,
+        -0.035,
+        0.235,
+        0.07,
+        1.0,
+        -0.05
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.43,
+        0.035,
+        0.235,
+        -0.07,
+        1.0,
+        0.05
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.455,
+        0,
+        0.285,
+        0.03,
+        0.6,
+        -0.08
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.435,
+        0.01,
+        0.285,
+        -0.22,
+        0.64,
+        0.05
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.435,
+        0.01,
+        0.285,
+        0.22,
+        0.64,
+        0.05
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.435,
+        0.01,
+        0.285,
+        0.03,
+        0.64,
+        -0.24
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.435,
+        0.01,
+        0.285,
+        0.03,
+        0.64,
+        0.24
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.435,
+        0.01,
+        0.285,
+        -0.14,
+        0.79,
+        -0.16
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.435,
+        0.01,
+        0.285,
+        0.14,
+        0.79,
+        0.16
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.423,
+        -0.045,
+        0.25,
+        0.03,
+        0.9,
+        -0.04
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.423,
+        0.045,
+        0.25,
+        -0.03,
+        0.9,
+        0.04
+      ]
+    },
+    {
+      "group": "independent_visible_validation",
+      "xyz_rpy": [
+        0.45,
+        0.01,
+        0.23,
+        0.03,
+        0.92,
+        0.03
+      ]
+    },
+    {
+      "group": "independent_near_horizontal_validation",
+      "xyz_rpy": [
+        0.425,
+        -0.025,
+        0.255,
+        0.03,
+        0.22,
+        -0.035
+      ]
+    },
+    {
+      "group": "independent_near_horizontal_validation",
+      "xyz_rpy": [
+        0.425,
+        0.025,
+        0.255,
+        -0.03,
+        0.22,
+        0.035
+      ]
+    },
+    {
+      "group": "independent_near_horizontal_validation",
+      "xyz_rpy": [
+        0.445,
+        -0.025,
+        0.275,
+        0.03,
+        0.32,
+        -0.05
+      ]
+    },
+    {
+      "group": "independent_near_horizontal_validation",
+      "xyz_rpy": [
+        0.445,
+        0.025,
+        0.275,
+        -0.03,
+        0.32,
+        0.05
+      ]
+    },
+    {
+      "group": "independent_near_horizontal_validation",
+      "xyz_rpy": [
+        0.435,
+        0.01,
+        0.245,
+        -0.15,
+        0.25,
+        -0.07
+      ]
+    },
+    {
+      "group": "independent_near_horizontal_validation",
+      "xyz_rpy": [
+        0.435,
+        0.01,
+        0.245,
+        0.15,
+        0.25,
+        0.07
+      ]
+    }
+  ],
+  "max_frame_gap_s": 0.12,
+  "vision_static_mm": 3.0,
+  "vision_static_deg": 2.0,
+  "gripper_span_rad": 0.005,
+  "sampling_region": null,
+  "max_consecutive_capture_failures": 3,
+  "gravity_excluded_urdf_links": [
+    "camera_mount_link",
+    "camera_link"
+  ],
+  "validation_scope": "Independent visible task-region poses; no low downward positions outside the fixed camera field of view. No training samples copied."
+}

@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-25",
+  "timezone": "Asia/Shanghai",
+  "hardware_accessed": false,
+  "production_project_changed": false,
+  "offline_checks": {
+    "shared_backend": {"tests": 147, "status": "PASS"},
+    "wrist": {"tests": 56, "status": "PASS"},
+    "paired_model_and_sdk_smoke": "PASS"
+  },
+  "paired_wrist_solver_reproduction": {
+    "source_training_count": 74,
+    "source_dataset_sha256": "1a8673bd8a0ae56afa6a41b5c1c0c503735665202dbccb98412f4d235f511b6b",
+    "maximum_extrinsic_matrix_element_difference": 0.0,
+    "maximum_joint_offset_difference_deg": 0.0,
+    "interpretation": "Reproduced locally from the original numerical dataset using the public CLI. Raw dataset is not included; this checks refactoring equivalence, not independent physical accuracy."
+  },
+  "limitations": [
+    "Private historical-log/raw-dataset regression cases are explicitly excluded by the public offline runner.",
+    "Tests used the existing rebotarm environment; a fresh conda solve and GitHub-hosted CI have not yet been verified.",
+    "No camera, motor, or real-time performance test was run for this release.",
+    "Physical fingertip accuracy remains unverified."
+  ]
+}
