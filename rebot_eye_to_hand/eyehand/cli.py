@@ -141,7 +141,7 @@ def collect(args):
                 from .reference_manual import ReferenceManualReader
                 robot = ReferenceManualReader(reference_script=args.reference_script, channel=args.channel,
                                               ee_frame=args.ee_frame, base_frame=args.base_frame,
-                                              gravity_config=args.gravity_config)
+                                              gravity_config=args.gravity_config, sdk_root=args.sdk)
             else:
                 from .manual import ManualGravityReader
                 robot = ManualGravityReader(args.sdk, args.channel, args.ee_frame, args.base_frame,

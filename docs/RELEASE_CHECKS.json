@@ -4,8 +4,14 @@
   "hardware_accessed": false,
   "production_project_changed": false,
   "offline_checks": {
-    "shared_backend": {"tests": 147, "status": "PASS"},
-    "wrist": {"tests": 56, "status": "PASS"},
+    "shared_backend": {
+      "tests": 147,
+      "status": "PASS"
+    },
+    "wrist": {
+      "tests": 56,
+      "status": "PASS"
+    },
     "paired_model_and_sdk_smoke": "PASS"
   },
   "paired_wrist_solver_reproduction": {
@@ -17,8 +23,18 @@
   },
   "limitations": [
     "Private historical-log/raw-dataset regression cases are explicitly excluded by the public offline runner.",
-    "Tests used the existing rebotarm environment; a fresh conda solve and GitHub-hosted CI have not yet been verified.",
     "No camera, motor, or real-time performance test was run for this release.",
     "Physical fingertip accuracy remains unverified."
-  ]
+  ],
+  "fresh_environment_ci": {
+    "status": "PASS",
+    "commit": "b970e82",
+    "url": "https://github.com/goatwzz/rebot-eye-calibration/actions/runs/45573392698",
+    "verified": [
+      "fresh micromamba environment",
+      "pinned SDK download and patches",
+      "paired model smoke",
+      "offline tests"
+    ]
+  }
 }

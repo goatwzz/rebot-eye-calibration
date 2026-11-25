@@ -16,7 +16,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .hardware import RebotReader
+from .hardware import RebotReader, DEFAULT_SDK
 from .gravity_parameters import DEFAULT_GRAVITY_CONFIG, apply_gravity_parameters, load_gravity_parameters
 
 DEFAULT_REFERENCE = Path(__file__).resolve().parents[2] / "rebot_eye_in_hand/robot/gravity_controller.py"
@@ -41,12 +41,17 @@ class ReferenceManualReader(RebotReader):
     uses_explicit_modes = False
 
     def __init__(self, *, reference_script=DEFAULT_REFERENCE, channel=None,
-                 ee_frame="gripper_end", base_frame="base_link", gravity_config=DEFAULT_GRAVITY_CONFIG):
+                 ee_frame="gripper_end", base_frame="base_link", gravity_config=DEFAULT_GRAVITY_CONFIG,
+                 sdk_root=None):
         if not sys.stdin.isatty():
             raise ValueError("--manual requires an interactive terminal")
         self._active = False
         self.command_queue = None
-        # Resolve the same installed SDK that the original command imports.
+        # Select the checked-out dependency without requiring a global SDK install.
+        from .native_runtime import activate
+        activate()
+        if "reBotArm_control_py" not in sys.modules:
+            sys.path.insert(0, str(Path(sdk_root or DEFAULT_SDK).resolve()))
         import reBotArm_control_py
         from reBotArm_control_py.actuator import RebotArm
         import yaml
